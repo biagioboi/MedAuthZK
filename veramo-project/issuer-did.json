@@ -1,0 +1,25 @@
+{
+  "did": "did:ethr:private:0x03e2a3a08879cca4f79e8eaa76d331a3ae131f98d7fd86930cf67545d3a38d436a",
+  "controllerKeyId": "04e2a3a08879cca4f79e8eaa76d331a3ae131f98d7fd86930cf67545d3a38d436a2df37090cad6a1ee98e233dc62e2bc389200514a75b6ee9f2d5015dbdc911c49",
+  "keys": [
+    {
+      "type": "Secp256k1",
+      "kid": "04e2a3a08879cca4f79e8eaa76d331a3ae131f98d7fd86930cf67545d3a38d436a2df37090cad6a1ee98e233dc62e2bc389200514a75b6ee9f2d5015dbdc911c49",
+      "publicKeyHex": "04e2a3a08879cca4f79e8eaa76d331a3ae131f98d7fd86930cf67545d3a38d436a2df37090cad6a1ee98e233dc62e2bc389200514a75b6ee9f2d5015dbdc911c49",
+      "meta": {
+        "algorithms": [
+          "ES256K",
+          "ES256K-R",
+          "eth_signTransaction",
+          "eth_signTypedData",
+          "eth_signMessage",
+          "eth_rawSign"
+        ]
+      },
+      "kms": "local"
+    }
+  ],
+  "services": [],
+  "provider": "did:ethr:private",
+  "alias": "issuer"
+}

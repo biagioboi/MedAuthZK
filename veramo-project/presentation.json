@@ -1,0 +1,78 @@
+{
+  "credentialSubject": {
+    "id": "did:ethr:private:0x031729b26954d1af6b923da5c72045891e1b4b3aeadf50064e6a6a75a66bc72d0c",
+    "name": "Mario Rossi",
+    "dateOfBirth": "1990-01-01",
+    "zkpProof": {
+      "scheme": "g16",
+      "curve": "bn128",
+      "proof": {
+        "a": [
+          "0x1be8e8d65aaaf81a054fc57355af9784cfa4b503df17a75a85888e420830abe3",
+          "0x047586af8b7ffbaca455e9bf6971ed9f97fc5a83e56fa7beb7c4214c8a77ae1f"
+        ],
+        "b": [
+          [
+            "0x286a28284016953864639d53d1377885398614b1b2a5ef83756f77a1d68b57bd",
+            "0x2906e7f349c104cbec1d989ed71f00b051c1728bbf642a67adf74459f0c1d659"
+          ],
+          [
+            "0x2fc2ddc6f750eded9376b9ce0b27d14f32c4a2f4bb8470935be550f12658a308",
+            "0x2f85658979ac909319a1e1f76941335069469d4af893c1701fe1988248e72d87"
+          ]
+        ],
+        "c": [
+          "0x2fa9df1b33c739b113b17aa3f80e005a0ef1174563addb0afa4d22a0e2f09af1",
+          "0x17ae6a21d08225bbcb29805fd63abda840c0101f07b2a9df712aa2204955aff7"
+        ]
+      },
+      "inputs": [
+        "0x0000000000000000000000000000000000000000000000000000000000000001"
+      ]
+    }
+  },
+  "verifiableCredential": [
+    {
+      "credentialSubject": {
+        "name": "Mario Rossi",
+        "dateOfBirth": "1990-01-01",
+        "healthID": "RSSMRA90A01H703H",
+        "diagnosi": {
+          "hash": "eed7ee17297e46fce4559c1c020e180fae2f401460a2609ab7b502b18d09e126",
+          "hashNumerico": "18",
+          "malattiaID": 0,
+          "malattiaNome": "cancro"
+        },
+        "insuranceProvider": "National Health Service",
+        "id": "did:ethr:private:0x031729b26954d1af6b923da5c72045891e1b4b3aeadf50064e6a6a75a66bc72d0c"
+      },
+      "issuer": {
+        "id": "did:ethr:private:0x03e2a3a08879cca4f79e8eaa76d331a3ae131f98d7fd86930cf67545d3a38d436a"
+      },
+      "type": [
+        "VerifiableCredential",
+        "HealthCredential"
+      ],
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
+      "issuanceDate": "2024-09-23T14:10:38.000Z",
+      "proof": {
+        "type": "JwtProof2020",
+        "jwt": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiSGVhbHRoQ3JlZGVudGlhbCJdLCJjcmVkZW50aWFsU3ViamVjdCI6eyJuYW1lIjoiTWFyaW8gUm9zc2kiLCJkYXRlT2ZCaXJ0aCI6IjE5OTAtMDEtMDEiLCJoZWFsdGhJRCI6IlJTU01SQTkwQTAxSDcwM0giLCJkaWFnbm9zaSI6eyJoYXNoIjoiZWVkN2VlMTcyOTdlNDZmY2U0NTU5YzFjMDIwZTE4MGZhZTJmNDAxNDYwYTI2MDlhYjdiNTAyYjE4ZDA5ZTEyNiIsImhhc2hOdW1lcmljbyI6IjE4IiwibWFsYXR0aWFJRCI6MCwibWFsYXR0aWFOb21lIjoiY2FuY3JvIn0sImluc3VyYW5jZVByb3ZpZGVyIjoiTmF0aW9uYWwgSGVhbHRoIFNlcnZpY2UifX0sInN1YiI6ImRpZDpldGhyOnByaXZhdGU6MHgwMzE3MjliMjY5NTRkMWFmNmI5MjNkYTVjNzIwNDU4OTFlMWI0YjNhZWFkZjUwMDY0ZTZhNmE3NWE2NmJjNzJkMGMiLCJuYmYiOjE3MjcxMDA2MzgsImlzcyI6ImRpZDpldGhyOnByaXZhdGU6MHgwM2UyYTNhMDg4NzljY2E0Zjc5ZThlYWE3NmQzMzFhM2FlMTMxZjk4ZDdmZDg2OTMwY2Y2NzU0NWQzYTM4ZDQzNmEifQ.XVKuz3tooz2W3ZZDExS8Ehuru9BMXL61KM5CzfLjuewdU_Wf2_lvRsD3jgYnlgwRadP29GNSuMbgEd7kVPIxEg"
+      }
+    }
+  ],
+  "holder": "did:ethr:private:0x031729b26954d1af6b923da5c72045891e1b4b3aeadf50064e6a6a75a66bc72d0c",
+  "type": [
+    "VerifiablePresentation"
+  ],
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1"
+  ],
+  "issuanceDate": "2024-09-23T14:29:47.000Z",
+  "proof": {
+    "type": "JwtProof2020",
+    "jwt": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2cCI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVQcmVzZW50YXRpb24iXSwidmVyaWZpYWJsZUNyZWRlbnRpYWwiOlsiZXlKaGJHY2lPaUpGVXpJMU5rc2lMQ0owZVhBaU9pSktWMVFpZlEuZXlKMll5STZleUpBWTI5dWRHVjRkQ0k2V3lKb2RIUndjem92TDNkM2R5NTNNeTV2Y21jdk1qQXhPQzlqY21Wa1pXNTBhV0ZzY3k5Mk1TSmRMQ0owZVhCbElqcGJJbFpsY21sbWFXRmliR1ZEY21Wa1pXNTBhV0ZzSWl3aVNHVmhiSFJvUTNKbFpHVnVkR2xoYkNKZExDSmpjbVZrWlc1MGFXRnNVM1ZpYW1WamRDSTZleUp1WVcxbElqb2lUV0Z5YVc4Z1VtOXpjMmtpTENKa1lYUmxUMlpDYVhKMGFDSTZJakU1T1RBdE1ERXRNREVpTENKb1pXRnNkR2hKUkNJNklsSlRVMDFTUVRrd1FUQXhTRGN3TTBnaUxDSmthV0ZuYm05emFTSTZleUpvWVhOb0lqb2laV1ZrTjJWbE1UY3lPVGRsTkRabVkyVTBOVFU1WXpGak1ESXdaVEU0TUdaaFpUSm1OREF4TkRZd1lUSTJNRGxoWWpkaU5UQXlZakU0WkRBNVpURXlOaUlzSW1oaGMyaE9kVzFsY21samJ5STZJakU0SWl3aWJXRnNZWFIwYVdGSlJDSTZNQ3dpYldGc1lYUjBhV0ZPYjIxbElqb2lZMkZ1WTNKdkluMHNJbWx1YzNWeVlXNWpaVkJ5YjNacFpHVnlJam9pVG1GMGFXOXVZV3dnU0dWaGJIUm9JRk5sY25acFkyVWlmWDBzSW5OMVlpSTZJbVJwWkRwbGRHaHlPbkJ5YVhaaGRHVTZNSGd3TXpFM01qbGlNalk1TlRSa01XRm1ObUk1TWpOa1lUVmpOekl3TkRVNE9URmxNV0kwWWpOaFpXRmtaalV3TURZMFpUWmhObUUzTldFMk5tSmpOekprTUdNaUxDSnVZbVlpT2pFM01qY3hNREEyTXpnc0ltbHpjeUk2SW1ScFpEcGxkR2h5T25CeWFYWmhkR1U2TUhnd00yVXlZVE5oTURnNE56bGpZMkUwWmpjNVpUaGxZV0UzTm1Rek16RmhNMkZsTVRNeFpqazRaRGRtWkRnMk9UTXdZMlkyTnpVME5XUXpZVE00WkRRek5tRWlmUS5YVkt1ejN0b296MlczWlpERXhTOEVodXJ1OUJNWEw2MUtNNUN6ZkxqdWV3ZFVfV2YyX2x2UnNEM2pnWW5sZ3dSYWRQMjlHTlN1TWJnRWQ3a1ZQSXhFZyJdfSwiY3JlZGVudGlhbFN1YmplY3QiOnsiaWQiOiJkaWQ6ZXRocjpwcml2YXRlOjB4MDMxNzI5YjI2OTU0ZDFhZjZiOTIzZGE1YzcyMDQ1ODkxZTFiNGIzYWVhZGY1MDA2NGU2YTZhNzVhNjZiYzcyZDBjIiwibmFtZSI6Ik1hcmlvIFJvc3NpIiwiZGF0ZU9mQmlydGgiOiIxOTkwLTAxLTAxIiwiemtwUHJvb2YiOnsic2NoZW1lIjoiZzE2IiwiY3VydmUiOiJibjEyOCIsInByb29mIjp7ImEiOlsiMHgxYmU4ZThkNjVhYWFmODFhMDU0ZmM1NzM1NWFmOTc4NGNmYTRiNTAzZGYxN2E3NWE4NTg4OGU0MjA4MzBhYmUzIiwiMHgwNDc1ODZhZjhiN2ZmYmFjYTQ1NWU5YmY2OTcxZWQ5Zjk3ZmM1YTgzZTU2ZmE3YmViN2M0MjE0YzhhNzdhZTFmIl0sImIiOltbIjB4Mjg2YTI4Mjg0MDE2OTUzODY0NjM5ZDUzZDEzNzc4ODUzOTg2MTRiMWIyYTVlZjgzNzU2Zjc3YTFkNjhiNTdiZCIsIjB4MjkwNmU3ZjM0OWMxMDRjYmVjMWQ5ODllZDcxZjAwYjA1MWMxNzI4YmJmNjQyYTY3YWRmNzQ0NTlmMGMxZDY1OSJdLFsiMHgyZmMyZGRjNmY3NTBlZGVkOTM3NmI5Y2UwYjI3ZDE0ZjMyYzRhMmY0YmI4NDcwOTM1YmU1NTBmMTI2NThhMzA4IiwiMHgyZjg1NjU4OTc5YWM5MDkzMTlhMWUxZjc2OTQxMzM1MDY5NDY5ZDRhZjg5M2MxNzAxZmUxOTg4MjQ4ZTcyZDg3Il1dLCJjIjpbIjB4MmZhOWRmMWIzM2M3MzliMTEzYjE3YWEzZjgwZTAwNWEwZWYxMTc0NTYzYWRkYjBhZmE0ZDIyYTBlMmYwOWFmMSIsIjB4MTdhZTZhMjFkMDgyMjViYmNiMjk4MDVmZDYzYWJkYTg0MGMwMTAxZjA3YjJhOWRmNzEyYWEyMjA0OTU1YWZmNyJdfSwiaW5wdXRzIjpbIjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSJdfX0sIm5iZiI6MTcyNzEwMTc4NywiaXNzIjoiZGlkOmV0aHI6cHJpdmF0ZToweDAzMTcyOWIyNjk1NGQxYWY2YjkyM2RhNWM3MjA0NTg5MWUxYjRiM2FlYWRmNTAwNjRlNmE2YTc1YTY2YmM3MmQwYyJ9.djt4qLSI-kP584Spl5WoE2HpfDSwTMaU7eFL3ySoaHZFUZVbYVsX9HtBbHSO3xEtmyOqzOvAalosZ9RF19GfiA"
+  }
+}
