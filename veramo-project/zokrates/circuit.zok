@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 // Definizione di una struttura per una malattia
 struct Malattia {
     field id;
@@ -7,7 +5,7 @@ struct Malattia {
 }
 
 // Funzione principale per verificare l'hash della malattia e l'ID
-def main(private field hashDiagnosiBreve, private field malattiaID) -> field {
+def main(private field hashDiagnosiBreve, private field malattiaID) -> field{
      // Array delle malattie con hash ridotti
     Malattia[4] malattie = [
         Malattia { id: 0, hash: 18 }, // Cancro

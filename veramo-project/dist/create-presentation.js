@@ -1,27 +1,29 @@
 import { agent } from './veramo/setup.js';
 import * as fs from 'fs';
-import { initialize } from 'zokrates-js'; // Importa la funzione per generare la prova
+import { initialize } from 'zokrates-js'; // Libreria zokrates-js per la generazione della prova
 import path from 'path';
-// Define the path to the ZoKrates source file
+// Il percorso per trovare il circuito di Zokrates
 const sourcePath = path.join('.', 'zokrates', 'circuit.zok');
+// Funzione per generare la prova ZKP
 async function generateZKP(diagnosisHashBreve, malattiaID) {
-    const zokratesProvider = await initialize();
-    // Load and compile the ZoKrates source code
+    const zokratesProvider = await initialize(); // Inizializza Zokrates
+    // Carica e compila il circuito (file .zok)
     const source = fs.readFileSync(sourcePath, 'utf8');
     const artifacts = await zokratesProvider.compile(source);
-    // Compute witness
+    // Calcola il witness
     const inputs = [diagnosisHashBreve, malattiaID];
     const { witness } = await zokratesProvider.computeWitness(artifacts.program, inputs);
+    // Carica la proving key
     const proveKeyPath = path.join('.', 'zokrates', 'proving.key');
-    const provingKey = fs.readFileSync(proveKeyPath); //provingKey: Uint8Array,
-    // Generate proof
+    const provingKey = fs.readFileSync(proveKeyPath); // provingKey: Uint8Array
+    // Genera la prova da presentare
     const proof = await zokratesProvider.generateProof(artifacts.program, witness, provingKey);
     return proof;
 }
+// Funzione per creare una presentazione verificabile
 async function createPresentation() {
     // Carica la Verifiable Credential da un file
-    // Load and parse the verifiedCredential.json file
-    const verifiedCredentialFile = JSON.parse(fs.readFileSync('VCredential.json', 'utf8'));
+    const verifiedCredentialFile = JSON.parse(fs.readFileSync('verifiedCredential.json', 'utf8'));
     const verifiedCredential = verifiedCredentialFile.verifiableCredential;
     // Ottieni l'identificatore del client (client DID)
     const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });
@@ -34,19 +36,36 @@ async function createPresentation() {
     // Crea la Verifiable Presentation con i campi selezionati e la prova ZKP
     const vp = await agent.createVerifiablePresentation({
         presentation: {
-            holder: clientIdentifier.did,
-            verifiableCredential: [verifiedCredential], // Usa la credenziale completa
+            holder: clientIdentifier.did, // Usa l'identificatore del cliente
             credentialSubject: {
                 id: clientIdentifier.did,
                 name: verifiedCredential.credentialSubject.name, // Nome non sensibile
                 dateOfBirth: verifiedCredential.credentialSubject.dateOfBirth, // Data di nascita non sensibile
-                healthID: verifiedCredential.healthID, // Codice fiscale
+                healthID: verifiedCredential.credentialSubject.healthID, // Codice fiscale
+                diagnosis: verifiedCredential.credentialSubject.diagnosi.hash,
                 zkpProof, // Aggiungi la prova ZKP
             },
         },
-        proofFormat: 'jwt',
+        proofFormat: 'jwt', // Formato di firma
     });
-    console.log('Nuova presentazione creata con campi selezionati');
-    fs.writeFileSync('presentation.json', JSON.stringify(vp, null, 2));
+    // Verifica la presentazione creata
+    const verificationResult = await agent.verifyPresentation({ presentation: vp });
+    // Log del risultato della verifica
+    console.log('Risultato verifica presentazione:', verificationResult.verified);
+    console.log('Sto salvando la presentazione...');
+    // Percorso della cartella di output
+    const outputDir = 'outputs';
+    // Controlla se la cartella esiste, altrimenti creala
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+        console.log(`Cartella "${outputDir}" creata.`);
+    }
+    // Salva la presentazione in un file JSON nella cartella outputs
+    const filePath = path.join(outputDir, 'presentation.json');
+    fs.writeFileSync(filePath, JSON.stringify(vp, null, 2));
+    console.log(`Nuova presentazione creata e salvata in ${filePath}`);
 }
+// Esegui la funzione
 createPresentation().catch(console.error);
+// Esporta la funzione per l'utilizzo in altri moduli
+export { createPresentation };

@@ -1,8 +1,11 @@
 import { agent } from './veramo/setup.js';
 import * as fs from 'fs';
+import path from 'path'; // Importa il modulo path per la gestione dei percorsi
 import { calcolaHash, malattieConNumeri } from './utils/malattie.js';
 
-async function main() {
+// Funzione per emettere una Verifiable Credential (VC)
+async function issueCredential() {
+    // Recupera l'identificatore dell'emittente e del client
     const issuerIdentifier = await agent.didManagerGetByAlias({ alias: 'issuer' });
     const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });
 
@@ -44,9 +47,16 @@ async function main() {
     });
 
     console.log('Nuova credenziale creata');
-    fs.writeFileSync('credential.json', JSON.stringify(vc, null, 2));
+
+    // Aggiorna il percorso di salvataggio
+    const credentialPath = path.join('outputs', 'credential.json'); // Percorso aggiornato
+    fs.writeFileSync(credentialPath, JSON.stringify(vc, null, 2)); // Salva il file nella cartella outputs
+
+    return vc; // Restituisce la credenziale emessa
 }
 
-main().catch(error => {
-    console.error('Errore durante l\'emissione della credenziale:', error);
-});
+// Esegui la funzione
+issueCredential().catch(console.error);
+
+// Esporta la funzione
+export { issueCredential };

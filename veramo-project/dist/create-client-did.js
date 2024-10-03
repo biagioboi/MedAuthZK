@@ -1,10 +1,27 @@
 import { agent } from './veramo/setup.js';
 import * as fs from 'fs';
-async function main() {
+import * as path from 'path';
+// Funzione per creare un client DID
+async function createClientDID() {
+    // Crea un nuovo identificatore per il client
     const clientIdentifier = await agent.didManagerCreate({ alias: 'client' });
-    console.log('New client identifier created');
+    // Stampa un messaggio di conferma nella console
+    console.log('Nuovo identificatore client creato');
+    // Stampa il clientIdentifier in formato JSON
     console.log(JSON.stringify(clientIdentifier, null, 2));
-    fs.writeFileSync('client-did.json', JSON.stringify(clientIdentifier, null, 2));
-    console.log('New did created and saved to client-did.json');
+    // Percorso della cartella di output
+    const outputDir = 'outputs';
+    // Controlla se la cartella esiste, altrimenti creala
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+        console.log(`Cartella "${outputDir}" creata.`);
+    }
+    // Salva il clientIdentifier in un file JSON nella cartella outputs
+    const filePath = path.join(outputDir, 'client-did.json');
+    fs.writeFileSync(filePath, JSON.stringify(clientIdentifier, null, 2));
+    // Stampa un messaggio di conferma dopo il salvataggio
+    console.log(`Nuovo DID creato e salvato in ${filePath}`);
+    return clientIdentifier; // Restituisce l'identificatore del client
 }
-main().catch(console.error);
+createClientDID().catch(console.error);
+export { createClientDID }; // Esporta la funzione per utilizzarla in altri file

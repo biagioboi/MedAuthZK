@@ -26,4 +26,3 @@ export const malattieConNumeri = malattie.map(malattia => {
         hashNumerico // Passa il numero ridotto modulo p
     };
 });
-console.log(malattieConNumeri);
