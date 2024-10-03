@@ -1,11 +1,17 @@
 import * as crypto from 'crypto';
+import * as fs from 'fs';
 
 // Definizione del primo p per i campi di ZoKrates
 const p = BigInt('19');
 
-// Funzione per ottenere l'hash di una malattia in SHA-256
-export function calcolaHash(malattia: string): string {
-    return crypto.createHash('sha256').update(malattia).digest('hex');
+// Funzione per ottenere un *salt* casuale di lunghezza 16 caratteri
+function generaSalt(): string {
+    return crypto.randomBytes(8).toString('hex');
+}
+
+// Funzione per ottenere l'hash di una malattia in SHA-256, concatenata con un salt
+export function calcolaHashConSalt(malattia: string, salt: string): string {
+    return crypto.createHash('sha256').update(malattia + salt).digest('hex');
 }
 
 // Funzione per convertire un hash esadecimale in un numero BigInt e ridurlo modulo p
@@ -14,20 +20,33 @@ export function hexToField(hex: string): bigint {
     return hashNumerico % p;  // Riduci il valore modulo p per ZoKrates
 }
 
-// Definizione delle malattie
+// Definizione delle malattie con un salt univoco
 const malattie = [
-    { id: 0, nome: 'cancro', hash: calcolaHash('cancro') },
-    { id: 1, nome: 'malattia cardiaca', hash: calcolaHash('malattia cardiaca') },
-    { id: 2, nome: 'diabete', hash: calcolaHash('diabete') },
-    { id: 3, nome: 'malattia renale', hash: calcolaHash('malattia renale') },
+    { id: 0, nome: 'cancro', salt: generaSalt() },
+    { id: 1, nome: 'malattia cardiaca', salt: generaSalt() },
+    { id: 2, nome: 'diabete', salt: generaSalt() },
+    { id: 3, nome: 'malattia renale', salt: generaSalt() },
 ];
 
-// Conversione degli hash in numeri e riduzione modulo p
+// Calcolo degli hash con salt e conversione degli hash in numeri ridotti modulo p
 export const malattieConNumeri = malattie.map(malattia => {
-    const hashNumerico = hexToField(malattia.hash);
-    console.log(`Malattia: ${malattia.nome}, Hash: ${malattia.hash}, Hash Numerico: ${hashNumerico}`);
+    const hash = calcolaHashConSalt(malattia.nome, malattia.salt);  // Calcola l'hash con il salt
+    const hashNumerico = hexToField(hash).toString();  // Riduci modulo p
+    console.log(`Malattia: ${malattia.nome}, Salt: ${malattia.salt}, Hash: ${hash}, Hash Numerico: ${hashNumerico}`);
     return {
         ...malattia,
-        hashNumerico  // Passa il numero ridotto modulo p
+        hash,  // Hash calcolato con salt
+        hashNumerico // Numero ridotto modulo p
     };
 });
+
+// Funzione per salvare le malattie calcolate in un file JSON
+function salvaMalattieInFile() {
+    const filePath = './malattieDB.json';
+    const datiDaSalvare = JSON.stringify(malattieConNumeri, null, 2);  // Converti in stringa JSON formattata
+    fs.writeFileSync(filePath, datiDaSalvare, 'utf8');
+    console.log(`Dati salvati nel file ${filePath}`);
+}
+
+// Salva le malattie nel file malattieDB.json
+salvaMalattieInFile();

@@ -17,9 +17,10 @@ function runAllCommands() {
     // Esegue i comandi
     runCommand('node ./dist/create-presentation.js'); // Comando per creare una presentazione con Selective Disclosure
     runCommand('node ./dist/requestSBT.js'); // Comando per richiedere un SBT
-    
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale di esecuzione'); // Termina la misurazione del tempo totale
+    console.log("-----------------------------------------\n");
+    runCommand('node ./dist/canUserReceiveTreatment.js')
 
     
 }

@@ -23,7 +23,7 @@ async function generateZKP(diagnosisHashBreve, malattiaID) {
 // Funzione per creare una presentazione verificabile
 async function createPresentation() {
     // Carica la Verifiable Credential da un file
-    const verifiedCredentialFile = JSON.parse(fs.readFileSync('verifiedCredential.json', 'utf8'));
+    const verifiedCredentialFile = JSON.parse(fs.readFileSync('./outputs/verifiedCredential.json', 'utf8'));
     const verifiedCredential = verifiedCredentialFile.verifiableCredential;
     // Ottieni l'identificatore del client (client DID)
     const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });

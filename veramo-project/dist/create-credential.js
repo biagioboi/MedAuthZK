@@ -1,22 +1,14 @@
 import { agent } from './veramo/setup.js';
 import * as fs from 'fs';
-import path from 'path'; // Importa il modulo path per la gestione dei percorsi
-import { malattieConNumeri } from './utils/malattie.js';
-// Funzione per emettere una Verifiable Credential (VC)
+import path from 'path';
 async function issueCredential() {
-    // Recupera l'identificatore dell'emittente e del client
     const issuerIdentifier = await agent.didManagerGetByAlias({ alias: 'issuer' });
     const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });
-    const name = 'Mario Rossi';
-    const dateOfBirth = '1990-01-01';
-    const healthID = 'RSSMRA90A01H703H';
-    // Seleziona la prima malattia
-    const malattiaSelezionata = malattieConNumeri[0];
-    if (!malattiaSelezionata) {
+    const malattieFilePath = path.join('./dist/utils', 'malattieDB.json');
+    const malattieData = JSON.parse(fs.readFileSync(malattieFilePath, 'utf8'));
+    const malattiaSelezionata = malattieData[0];
+    if (!malattiaSelezionata)
         throw new Error('Nessuna malattia selezionata.');
-    }
-    const diagnosisHash = malattiaSelezionata.hash; // Hash della diagnosi
-    // Emissione della VC
     const vc = await agent.createVerifiableCredential({
         credential: {
             issuer: { id: issuerIdentifier.did },
@@ -25,14 +17,14 @@ async function issueCredential() {
             issuanceDate: new Date().toISOString(),
             credentialSubject: {
                 id: clientIdentifier.did,
-                name: name,
-                dateOfBirth: dateOfBirth,
-                healthID: healthID,
+                name: 'Mario Rossi',
+                dateOfBirth: '1990-01-01',
+                healthID: 'RSSMRA90A01H703H',
                 diagnosi: {
-                    hash: diagnosisHash, // Hash della diagnosi
-                    hashNumerico: malattiaSelezionata.hashNumerico.toString(), // Hash numerico
-                    malattiaID: malattiaSelezionata.id, // ID della malattia
-                    malattiaNome: malattiaSelezionata.nome // Nome della malattia
+                    hash: malattiaSelezionata.hash,
+                    hashNumerico: malattiaSelezionata.hashNumerico.toString(),
+                    malattiaID: malattiaSelezionata.id,
+                    malattiaNome: malattiaSelezionata.nome
                 },
                 insuranceProvider: 'National Health Service',
             },
@@ -40,12 +32,8 @@ async function issueCredential() {
         proofFormat: 'jwt',
     });
     console.log('Nuova credenziale creata');
-    // Aggiorna il percorso di salvataggio
-    const credentialPath = path.join('outputs', 'credential.json'); // Percorso aggiornato
-    fs.writeFileSync(credentialPath, JSON.stringify(vc, null, 2)); // Salva il file nella cartella outputs
-    return vc; // Restituisce la credenziale emessa
+    fs.writeFileSync(path.join('outputs', 'credential.json'), JSON.stringify(vc, null, 2));
+    return vc;
 }
-// Esegui la funzione
 issueCredential().catch(console.error);
-// Esporta la funzione
 export { issueCredential };

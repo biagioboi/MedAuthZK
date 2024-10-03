@@ -35,12 +35,6 @@ async function registerIssuerDID() {
     // Stima il gas necessario per la transazione
     const estimatedGas = await ethrDid.estimateGas.updateDIDDocument(issuerDidData.did, documentBytes);
     console.log('Gas stimato:', estimatedGas.toString()); // Mostra il gas stimato
-    // Recupera il prezzo attuale del gas
-    const gasPrice = await provider.getGasPrice();
-    console.log('Prezzo attuale del gas:', ethers.utils.formatUnits(gasPrice, 'gwei'), 'gwei'); // Mostra il prezzo del gas in gwei
-    // Calcola il costo della transazione
-    const transactionCost = estimatedGas.mul(gasPrice);
-    console.log('Costo stimato della transazione:', ethers.utils.formatEther(transactionCost), 'ETH'); // Mostra il costo in ETH
     // Invio della transazione per aggiornare il DID document
     const tx = await ethrDid.updateDIDDocument(issuerDidData.did, documentBytes);
     // Aspetta il completamento della transazione

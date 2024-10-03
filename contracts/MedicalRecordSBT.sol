@@ -16,12 +16,12 @@ contract MedicalRecordSBT is ERC721 {
         string name; // Nome
         string dateOfBirth; // Data di nascita
         string healthID; // ID sanitario
-        string diagnosis; // Diagnosi
+        mapping(string => bool) authorizedTreatment; // Mappatura delle diagnosi e permessi di trattamento
         bool authenticated; // Utente autenticato con la malattia
-        bool canReceiveTreatment; // Utente autorizzato a ricevere cure
     }
 
     mapping(address => MedicalRecord) private tokensIssued;
+    mapping(string => address) private didToAddress; // Mappa il DID all'indirizzo dell'utente
     mapping(address => Verifier.Proof) private userProofs; // Mappa che associa un indirizzo alla sua prova ZKP
 
     event SBTIssued(address indexed requester, uint256 tokenID);
@@ -43,11 +43,10 @@ contract MedicalRecordSBT is ERC721 {
         string memory name, // Nome
         string memory dateOfBirth, // Data di nascita
         string memory healthID, // ID sanitario
-        string memory diagnosis, // Diagnosi
+        string memory diagnosis, // Diagnosi (hash della malattia)
         Verifier.Proof memory zkpProof, // Prova ZKP in formato struct
         uint256[1] memory inputs // Input per la verifica
     ) public {
-
         // Controlla che l'utente non abbia già utilizzato questa prova
         require(isProofEmpty(userProofs[msg.sender]), "Prova gia' utilizzata per questo utente");
 
@@ -58,7 +57,6 @@ contract MedicalRecordSBT is ERC721 {
         // Verifica che l'utente non abbia già un token emesso
         require(tokensIssued[msg.sender].tokenID == 0, "Token gia emesso per questo indirizzo");
 
-  
         // Se la verifica è riuscita, emetti l'SBT e memorizza la prova
         _tokenCounter++;
         _safeMint(msg.sender, _tokenCounter);
@@ -66,16 +64,20 @@ contract MedicalRecordSBT is ERC721 {
         // Salva la prova nella mappatura
         userProofs[msg.sender] = zkpProof;
 
-        tokensIssued[msg.sender] = MedicalRecord({
-            id: id,
-            tokenID: _tokenCounter,
-            name: name,
-            dateOfBirth: dateOfBirth,
-            healthID: healthID,
-            diagnosis: diagnosis,
-            authenticated: true, // Imposta autenticato a true
-            canReceiveTreatment: true // Imposta autorizzato a ricevere cure a true
-        });
+        // Inizializza la struttura MedicalRecord
+        MedicalRecord storage record = tokensIssued[msg.sender];
+        record.tokenID = _tokenCounter;
+        record.id = id;
+        record.name = name;
+        record.dateOfBirth = dateOfBirth;
+        record.healthID = healthID;
+        record.authenticated = true;
+
+        // Salva la diagnosi e autorizza il trattamento per essa
+        record.authorizedTreatment[diagnosis] = true;
+
+        // Mappa il DID all'indirizzo dell'utente
+        didToAddress[id] = msg.sender;
 
         emit SBTIssued(msg.sender, _tokenCounter);
     }
@@ -84,22 +86,48 @@ contract MedicalRecordSBT is ERC721 {
         require(tokensIssued[msg.sender].tokenID != 0, "Nessun SBT da revocare");
         uint256 tokenID = tokensIssued[msg.sender].tokenID;
         _burn(tokenID);
+
+        // Rimuove l'associazione DID
+        string memory userDID = tokensIssued[msg.sender].id;
+        delete didToAddress[userDID];
+
+        // Cancella i record dell'utente
         delete tokensIssued[msg.sender];
         delete userProofs[msg.sender]; // Elimina la prova dell'utente
 
         emit SBTRevoked(msg.sender);
     }
 
-    function getMedicalRecord(address owner) public view returns (MedicalRecord memory) {
-        return tokensIssued[owner];
+    function getMedicalRecord(address owner) public view returns (
+        uint256 tokenID,
+        string memory id,
+        string memory name,
+        string memory dateOfBirth,
+        string memory healthID,
+        bool authenticated
+    ) {
+        MedicalRecord storage record = tokensIssued[owner];
+        return (
+            record.tokenID,
+            record.id,
+            record.name,
+            record.dateOfBirth,
+            record.healthID,
+            record.authenticated
+        );
     }
 
     function getUserProof(address user) public view returns (Verifier.Proof memory) {
         return userProofs[user]; // Restituisce la prova associata all'utente
     }
 
-    function canUserReceiveTreatment(address user) public view returns (bool) {
-        return tokensIssued[user].canReceiveTreatment; // Restituisce se l'utente può ricevere cure
+    // Verifica se l'utente con il DID specificato ha la malattia corrispondente all'hash fornito
+    function canUserReceiveTreatment(string memory did, string memory hashedDiagnosis) public view returns (bool) {
+        address userAddress = didToAddress[did];
+        require(userAddress != address(0), "Nessun utente associato a questo DID");
+
+        // Recupera il record medico associato all'utente e verifica il permesso per la diagnosi specifica
+        return tokensIssued[userAddress].authorizedTreatment[hashedDiagnosis];
     }
 
     // Funzione per verificare se una prova è vuota
