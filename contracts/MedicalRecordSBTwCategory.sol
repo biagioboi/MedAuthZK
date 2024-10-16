@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./verifier.sol"; // Importa il contratto Verifier.sol generato da ZoKrates
+import "./verifier-category.sol"; // Importa il contratto Verifier.sol generato da ZoKrates
 
 contract MedicalRecordSBT is ERC721 {
     address private _owner;
@@ -17,7 +17,9 @@ contract MedicalRecordSBT is ERC721 {
         string dateOfBirth; // Data di nascita
         string healthID; // ID sanitario
         mapping(string => bool) authorizedTreatment; // Mappatura delle diagnosi e permessi di trattamento
-        string[] diagnosisKeys; // Lista delle diagnosi per eliminazione
+        mapping(string => bool) authorizedCategory; // Mappatura delle categorie e permessi di trattamento
+        string[] treatmentKeys; // Lista delle diagnosi per eliminazione
+        string[] categoryKeys;  // Lista delle categorie per eliminazione
         bool authenticated; // Utente autenticato con la malattia
     }
 
@@ -46,27 +48,25 @@ contract MedicalRecordSBT is ERC721 {
         string memory dateOfBirth, // Data di nascita
         string memory healthID, // ID sanitario
         string memory diagnosis, // Diagnosi (hash della malattia)
+        string memory category, // Categoria (hash della categoria)
         Verifier.Proof memory zkpProof, // Prova ZKP in formato struct
         uint256[1] memory inputs // Input per la verifica
     ) public {
-        // Controlla che l'utente non abbia già utilizzato questa prova
-        require(isProofEmpty(userProofs[msg.sender]), "Prova gia' utilizzata per questo utente");
-
         // Verifica della prova ZKP
+        require(isProofEmpty(userProofs[msg.sender]), "Prova gia' utilizzata per questo utente");
         bool proofValid = verifier.verifyTx(zkpProof, inputs);
         require(proofValid, "Prova ZKP non valida");
 
-        // Verifica che l'utente non abbia già un token emesso
+        // Se la categoria non è autorizzata, emetti un nuovo SBT e aggiorna diagnosi e categoria
         require(tokensIssued[msg.sender].tokenID == 0, "Token gia emesso per questo indirizzo");
 
-        // Se la verifica è riuscita, emetti l'SBT e memorizza la prova
         _tokenCounter++;
         _safeMint(msg.sender, _tokenCounter);
 
         // Salva la prova nella mappatura
         userProofs[msg.sender] = zkpProof;
 
-        // Inizializza la struttura MedicalRecord
+        // Inizializza la struttura MedicalRecord per la prima volta
         MedicalRecord storage record = tokensIssued[msg.sender];
         record.tokenID = _tokenCounter;
         record.id = id;
@@ -75,9 +75,11 @@ contract MedicalRecordSBT is ERC721 {
         record.healthID = healthID;
         record.authenticated = true;
 
-        // Salva la diagnosi e autorizza il trattamento per essa
         record.authorizedTreatment[diagnosis] = true;
-        record.diagnosisKeys.push(diagnosis); // Salva la diagnosi per eliminazione futura
+        record.treatmentKeys.push(diagnosis); // Salva la diagnosi
+
+        record.authorizedCategory[category] = true;
+        record.categoryKeys.push(category); // Salva la categoria
 
 
         // Mappa il DID all'indirizzo dell'utente
@@ -85,9 +87,10 @@ contract MedicalRecordSBT is ERC721 {
 
         emit SBTIssued(msg.sender, _tokenCounter);
     }
+    
 
     function revokeSBT() public {
-        require(tokensIssued[msg.sender].tokenID != 0, "Nessun SBT da revocare");
+    require(tokensIssued[msg.sender].tokenID != 0, "Nessun SBT da revocare");
 
         MedicalRecord storage record = tokensIssued[msg.sender];
         uint256 tokenID = record.tokenID;
@@ -99,14 +102,21 @@ contract MedicalRecordSBT is ERC721 {
         string memory userDID = record.id;
         delete didToAddress[userDID];
 
-        // Cancella tutte le diagnosi autorizzate
-        for (uint256 i = 0; i < record.diagnosisKeys.length; i++) {
-            string memory diagnosis = record.diagnosisKeys[i];
+        // Cancella le diagnosi autorizzate
+        for (uint256 i = 0; i < record.treatmentKeys.length; i++) {
+            string memory diagnosis = record.treatmentKeys[i];
             delete record.authorizedTreatment[diagnosis];
         }
 
-        // Cancella l'array di diagnosi
-        delete record.diagnosisKeys;
+        // Cancella le categorie autorizzate
+        for (uint256 i = 0; i < record.categoryKeys.length; i++) {
+            string memory category = record.categoryKeys[i];
+            delete record.authorizedCategory[category];
+        }
+
+        // Cancella gli array di chiavi
+        delete record.treatmentKeys;
+        delete record.categoryKeys;
 
         // Infine, cancella il record medico completo e la prova ZKP associata
         delete tokensIssued[msg.sender];
@@ -139,17 +149,21 @@ contract MedicalRecordSBT is ERC721 {
         return userProofs[user]; // Restituisce la prova associata all'utente
     }
 
-    // Verifica se l'utente con il DID specificato ha la malattia corrispondente all'hash fornito
-    function canUserReceiveTreatment(string memory did, string memory hashedDiagnosis) public view returns (bool) {
+    function canUserReceiveTreatment(string memory did, string memory categoryHash) public view returns (bool) {
         address userAddress = didToAddress[did];
         require(userAddress != address(0), "Nessun utente associato a questo DID");
 
-        // Recupera il record medico associato all'utente e verifica il permesso per la diagnosi specifica
-        return tokensIssued[userAddress].authorizedTreatment[hashedDiagnosis];
+        // Recupera il record medico associato all'utente e verifica il permesso per la categoria specifica
+        return tokensIssued[userAddress].authorizedCategory[categoryHash];
     }
 
     // Funzione per verificare se una prova è vuota
     function isProofEmpty(Verifier.Proof memory proof) internal pure returns (bool) {
-        return (proof.a.X == 0 && proof.a.Y == 0 && proof.b.X[0] == 0 && proof.b.X[1] == 0 && proof.b.Y[0] == 0 && proof.b.Y[1] == 0 && proof.c.X == 0 && proof.c.Y == 0);
+        return (
+            proof.a.X == 0 && proof.a.Y == 0 && 
+            proof.b.X[0] == 0 && proof.b.X[1] == 0 && 
+            proof.b.Y[0] == 0 && proof.b.Y[1] == 0 && 
+            proof.c.X == 0 && proof.c.Y == 0
+        );
     }
 }

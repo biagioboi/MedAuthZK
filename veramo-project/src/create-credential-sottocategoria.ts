@@ -5,18 +5,20 @@ import path from 'path';
 async function issueCredential() {
     const issuerIdentifier = await agent.didManagerGetByAlias({ alias: 'issuer' });
     const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });
-
     const malattieFilePath = path.join('./dist/utils', 'categorieDB.json');
     const malattieData = JSON.parse(fs.readFileSync(malattieFilePath, 'utf8'));
 
-    // Seleziona una malattia casualmente
-    const malattiaSelezionata = malattieData[Math.floor(Math.random() * malattieData.length)];
+    // Seleziona casualmente una malattia
+    const malattiaSelezionataIndex = Math.floor(Math.random() * malattieData.length);
+    const malattiaSelezionata = malattieData[malattiaSelezionataIndex]; // Malattia selezionata casualmente
     if (!malattiaSelezionata) throw new Error('Nessuna malattia selezionata.');
 
-    // Seleziona una sottocategoria casualmente dalla malattia selezionata
-    const sottocategoriaSelezionata = malattiaSelezionata.sottocategorie[Math.floor(Math.random() * malattiaSelezionata.sottocategorie.length)];
+    // Seleziona casualmente una sottocategoria dalla malattia selezionata
+    const sottocategoriaIndex = Math.floor(Math.random() * malattiaSelezionata.sottocategorie.length);
+    const sottocategoriaSelezionata = malattiaSelezionata.sottocategorie[sottocategoriaIndex];
     if (!sottocategoriaSelezionata) throw new Error('Nessuna sottocategoria selezionata.');
 
+    // Crea la credenziale verificabile
     const vc = await agent.createVerifiableCredential({
         credential: {
             issuer: { id: issuerIdentifier.did },
@@ -29,10 +31,13 @@ async function issueCredential() {
                 dateOfBirth: '1990-01-01',
                 healthID: 'RSSMRA90A01H703H',
                 diagnosi: {
-                    hash: sottocategoriaSelezionata.hash,
-                    hashNumerico: sottocategoriaSelezionata.hashNumerico.toString(),
-                    malattiaID: malattiaSelezionata.id,
-                    malattiaNome: sottocategoriaSelezionata.nome
+                    categoriaHash: malattiaSelezionata.hash,
+                    categoriaHashNumerico: malattiaSelezionata.hashNumerico.toString(),  // Assicurati che sia una stringa
+                    categoriaID: malattiaSelezionata.id,
+                    categoriaNome: malattiaSelezionata.nome,
+                    diagnosiNome: sottocategoriaSelezionata.nome,
+                    diagnosiHash: sottocategoriaSelezionata.hash,
+                    diagnosiHashNumerico: sottocategoriaSelezionata.hashNumerico.toString(), // Hash numerico della sottocategoria
                 },
                 insuranceProvider: 'National Health Service',
             },
@@ -41,8 +46,7 @@ async function issueCredential() {
     });
 
     console.log('Nuova credenziale creata');
-    fs.writeFileSync(path.join('outputs', 'credential.json'), JSON.stringify(vc, null, 2));
-
+    fs.writeFileSync(path.join('outputs', 'credential-subcategory.json'), JSON.stringify(vc, null, 2));
     return vc;
 }
 

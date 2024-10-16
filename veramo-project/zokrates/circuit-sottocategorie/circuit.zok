@@ -1,0 +1,77 @@
+// Definizione di una struttura per una sottocategoria
+struct Sottocategoria {
+    field hashNumerico;
+}
+
+// Definizione di una struttura per una malattia
+struct Malattia {
+    field id;
+    field hashNumerico;
+    Sottocategoria[3] sottocategorie; // Dimensione fissa per semplicità, max 3 sottocategorie
+}
+
+// Funzione principale per verificare l'hash della malattia e dell'hash della sottocategoria
+def main(private field hashDiagnosiBreve, private field malattiaID, private field sottocategoriaID) -> field {
+    // Array delle malattie con hash numerici e sottocategorie
+    Malattia[4] malattie = [
+        Malattia {
+            id: 0,
+            hashNumerico: 4573,
+            sottocategorie: [
+                Sottocategoria { hashNumerico: 1148 }, // Cancro al seno
+                Sottocategoria { hashNumerico: 1228 }, // Cancro ai polmoni
+                Sottocategoria { hashNumerico: 435 }   // Melanoma
+            ]
+        },
+        Malattia {
+            id: 1,
+            hashNumerico: 4541,
+            sottocategorie: [
+                Sottocategoria { hashNumerico: 1466 }, // Infarto
+                Sottocategoria { hashNumerico: 1525 }, // Insufficienza cardiaca
+                Sottocategoria { hashNumerico: 3855 }  // Aritmia
+            ]
+        },
+        Malattia {
+            id: 2,
+            hashNumerico: 3731,
+            sottocategorie: [
+                Sottocategoria { hashNumerico: 280 },   // Diabete di tipo 1
+                Sottocategoria { hashNumerico: 1135 },  // Diabete di tipo 2
+                Sottocategoria { hashNumerico: 0 }      // Placeholder per la terza sottocategoria
+            ]
+        },
+        Malattia {
+            id: 3,
+            hashNumerico: 809,
+            sottocategorie: [
+                Sottocategoria { hashNumerico: 2624 }, // Insufficienza renale
+                Sottocategoria { hashNumerico: 1557 }, // Malattia renale policistica
+                Sottocategoria { hashNumerico: 0 }      // Placeholder per la terza sottocategoria
+            ]
+        }
+    ];
+
+    // Verifica della validità degli ID
+    assert(malattiaID < 4, "Categoria non valida");
+
+    // Variabile per tenere traccia della validità
+    field mut isValid = 0;
+    u32 mut validMalattiaIndex = 4; // Inizializza a un valore che non corrisponde a nessun indice
+
+    // Loop per verificare la corrispondenza dell'ID della categoria e l'hash della categoria 
+    for u32 i in 0..4 {
+        validMalattiaIndex = (malattie[i].id == malattiaID && malattie[i].hashNumerico == hashDiagnosiBreve) ? i : validMalattiaIndex; // Salva l'indice se c'è una corrispondenza
+    }
+
+    // Controllo se abbiamo trovato una categoria valida
+    isValid = (validMalattiaIndex < 4) ? 1 : 0; // Se l'indice è valido, imposta isValid a 1
+
+    // Loop per verificare la corrispondenza dell'hash della sottocategoria
+    for u32 j in 0..3 {
+        isValid = (malattie[validMalattiaIndex].sottocategorie[j].hashNumerico == sottocategoriaID) ?
+                    1 : isValid; // Controllo sull'hash della sottocategoria
+    }
+
+    return isValid;  // Ritorna 1 se sia l'ID della malattia che l'hash della sottocategoria corrispondono
+}

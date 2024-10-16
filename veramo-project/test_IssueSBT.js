@@ -15,12 +15,16 @@ function runAllCommands() {
     console.log("-----------------------------------------\n");
     
     // Esegue i comandi
-    runCommand('node ./dist/create-presentation.js'); // Comando per creare una presentazione con Selective Disclosure
-    runCommand('node ./dist/requestSBT.js'); // Comando per richiedere un SBT
+    runCommand('node ./dist/veramo/setup.js'); // Comando per creare un issuer
+    runCommand('node ./dist/create-presentation.js'); // Comando per creare una presentazione con Selective Disclosure (senza categorie)
+    runCommand('node ./dist/create-presentation-sottocategoria.js'); // Comando per creare una presentazione con Selective Disclosure (con categorie)
+    runCommand('node ./dist/requestSBT.js'); // Comando per richiedere un SBT (senza categorie)
+    runCommand('node ./dist/requestSBT-category.js'); // Comando per richiedere un SBT (senza categorie)
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale di esecuzione'); // Termina la misurazione del tempo totale
     console.log("-----------------------------------------\n");
     runCommand('node ./dist/canUserReceiveTreatment.js')
+    runCommand('node ./dist/canUserReceiveTreatmentCategory.js')
 
     
 }

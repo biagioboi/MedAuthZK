@@ -1,0 +1,88 @@
+[
+  {
+    "id": 0,
+    "nome": "Cancro",
+    "salt": "85eda98aa1da4c03",
+    "sottocategorie": [
+      {
+        "nome": "Cancro al seno",
+        "hash": "a6e42743c38a43a0afce6ed621472c4b5ad107082f403426e7768671d30cdbd9",
+        "hashNumerico": "1148"
+      },
+      {
+        "nome": "Cancro ai polmoni",
+        "hash": "d91193da1331bb35ccd05862fae5d9c429a7c18f727622fce5fed8c45e2e2d97",
+        "hashNumerico": "1228"
+      },
+      {
+        "nome": "Melanoma",
+        "hash": "ec21c64a819acbe72633f42959fa8699dad8032b32ff95fb6337278257e8dd66",
+        "hashNumerico": "435"
+      }
+    ],
+    "hash": "80b69f2f689efa9543c0225fb7c6ca94cdb7067b2e02731e89c38c1351c4fd1c",
+    "hashNumerico": "4573"
+  },
+  {
+    "id": 1,
+    "nome": "Malattia cardiaca",
+    "salt": "9af3abfaea2b9f45",
+    "sottocategorie": [
+      {
+        "nome": "Infarto",
+        "hash": "4df44cb45dd0b25d0c55ddff4aacf90ea2ad22292a74a2cb3e0d5f5fcf957bc4",
+        "hashNumerico": "1466"
+      },
+      {
+        "nome": "Insufficienza cardiaca",
+        "hash": "792145ccd0bd9653a897422dc5af8fe22cde119961ba02049fb56920329050d8",
+        "hashNumerico": "1525"
+      },
+      {
+        "nome": "Aritmia",
+        "hash": "b2411400c45e8ae8f6396b5655f3835a3699526f8f77a5c7adeb4b9868aece66",
+        "hashNumerico": "3855"
+      }
+    ],
+    "hash": "0826fb43066e3b1ac177d76e895a048c28a8fa9adcae69d56e42c03ec4920069",
+    "hashNumerico": "4541"
+  },
+  {
+    "id": 2,
+    "nome": "Diabete",
+    "salt": "022eb3c4c9167345",
+    "sottocategorie": [
+      {
+        "nome": "Diabete di tipo 1",
+        "hash": "96eb14b95ce68df0a5ea60ead75563df0833faadad3d6b2b8f984ec1444f56fe",
+        "hashNumerico": "280"
+      },
+      {
+        "nome": "Diabete di tipo 2",
+        "hash": "d1eceeb1383e4e7d6e03a5a15aeaf24fa15d0d22525f0a674955e6e3e4600763",
+        "hashNumerico": "1135"
+      }
+    ],
+    "hash": "f738b026f8cfb030fb122f9cf64918a9d3ce7956042c36ca114d316205cac35d",
+    "hashNumerico": "3731"
+  },
+  {
+    "id": 3,
+    "nome": "Malattia renale",
+    "salt": "de7708576fc4a746",
+    "sottocategorie": [
+      {
+        "nome": "Insufficienza renale",
+        "hash": "2b5c1627d848bc486cd74c9fc57cb1ff28b61f087bf65a82130096ab3a55ba99",
+        "hashNumerico": "2624"
+      },
+      {
+        "nome": "Malattia renale policistica",
+        "hash": "be3e272dc55f203d782d293976ad6f2f803790527f6add072028a3915913276e",
+        "hashNumerico": "1557"
+      }
+    ],
+    "hash": "8570ce975709d27ea14682ee2b537e8706eacd617357012ba1da2a6dca611cd8",
+    "hashNumerico": "809"
+  }
+]

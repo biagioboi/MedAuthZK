@@ -272,7 +272,7 @@
 					},
 					{
 						"internalType": "string",
-						"name": "hashedDiagnosis",
+						"name": "categoryHash",
 						"type": "string"
 					}
 				],
@@ -503,6 +503,11 @@
 					{
 						"internalType": "string",
 						"name": "diagnosis",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "category",
 						"type": "string"
 					},
 					{
@@ -858,7 +863,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"MedicalRecordSBT.sol": "MedicalRecordSBT"
+			"MedicalRecordSBTwCategory.sol": "MedicalRecordSBT"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -960,19 +965,19 @@
 				"dweb:/ipfs/QmVBEei6aTnvYNZp2CHYVNKyZS4q1KkjANfY39WVXZXVoT"
 			]
 		},
-		"MedicalRecordSBT.sol": {
-			"keccak256": "0x0396e00ee917bc6216914252116b4907fdf53a3bc3bc3e40c4ebcb5660e37003",
+		"MedicalRecordSBTwCategory.sol": {
+			"keccak256": "0x2be2817cb2e18a2793b314f6b8b8b29f36f8263c9ae9d984df9de74e75ffbc7d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5a9d73fd2dd676b6575088b4d069b24cd20195e396689adb63e5452a5a7292e5",
-				"dweb:/ipfs/QmeCjMR7nqciSqbYzdr8tHKsvYSNySR7AmSuGTgvADeVq4"
+				"bzz-raw://b862793f6030ddde218824c2b8d3f6efe83f12b2caac27566328c54fecb8fcce",
+				"dweb:/ipfs/QmYRjrhkzrgknx6oFcChJZuWC9zn6b5MXLpLjnpuuxbP69"
 			]
 		},
-		"verifier.sol": {
-			"keccak256": "0xcba61d6078ab5121a5abf8cbdf1c1ae505d91f9d13e732379e1168063eea4eef",
+		"verifier-category.sol": {
+			"keccak256": "0x98ca6353adcdd0c9fdeb6fabdaebc2b1350bb9add1e6c241faebe1b957ed749c",
 			"urls": [
-				"bzz-raw://545a3ab62132259011b03688714f1b18315233d41f53391abf12fd6934f2ae6d",
-				"dweb:/ipfs/QmehCDX2Q1j4ufe8Bo82C67J6aDYP7ZueLfMaubuMwxndZ"
+				"bzz-raw://d991f04e5dc041414d508a38e840dc7f5782be02c94ed68c71dbf5258c24f3ca",
+				"dweb:/ipfs/QmbA7A2YLoxgKfwL5HcRmGwWh51w93cWnxhfS8MRu9n2FG"
 			]
 		}
 	},

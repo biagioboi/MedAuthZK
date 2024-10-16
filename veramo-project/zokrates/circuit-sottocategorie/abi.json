@@ -1,0 +1,22 @@
+{
+  "inputs": [
+    {
+      "name": "hashDiagnosiBreve",
+      "public": false,
+      "type": "field"
+    },
+    {
+      "name": "malattiaID",
+      "public": false,
+      "type": "field"
+    },
+    {
+      "name": "sottocategoriaID",
+      "public": false,
+      "type": "field"
+    }
+  ],
+  "output": {
+    "type": "field"
+  }
+}

@@ -42,17 +42,18 @@ async function testCanUserReceiveTreatment(did: string, hashedDiagnosis: string)
 
 // Esempio di percorsi ai file
 const verifiableCredentialPath = path.join("./outputs", "credential.json");
-const malattieDBPath = path.join("./dist/utils", "malattieDB.json");
-
+const malattieDBPath = path.join("./dist/utils", "categorieDB.json");
 // Estrazione del DID e delle malattie
 const didToTest = getDidFromCredential(verifiableCredentialPath);
 const malattie = getMalattieFromDB(malattieDBPath);
-console.log(malattie);
-
-// Esegui il test per ogni malattia nel database
+// Esegui il test solo per le sottocategorie
 for (const malattia of malattie) {
-    const hashedDiagnosisToTest = malattia.hash; // Assicurati che 'hash' sia il nome corretto
-    
-    // Esecuzione della funzione di test per ogni malattia
-    await testCanUserReceiveTreatment(didToTest, hashedDiagnosisToTest);
+    const mainCategoryHash = malattia.hash; // Hash della categoria principale
+    // Itera su ciascuna sottocategoria della malattia
+    for (const sottocategoria of malattia.sottocategorie) {
+        const subcategoryHash = sottocategoria.hash; // Hash della sottocategoria
+        const subcategoryNome = sottocategoria.nome; // Nome della sottocategoria
+        // Esegui la chiamata alla funzione di test per la sottocategoria
+        await testCanUserReceiveTreatment(didToTest, subcategoryHash);
+    }
 }

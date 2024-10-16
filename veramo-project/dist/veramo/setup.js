@@ -19,6 +19,7 @@ export const KMS_SECRET_KEY = process.env.KMS_SECRET_KEY || '';
 export const RPC_URL = process.env.RPC_URL || '';
 export const DATABASE_FILE = process.env.DATABASE_FILE || '';
 export const SBT_ADDRESS = process.env.SBT_ADDRESS || '';
+export const SBT_ADDRESS_CTG = process.env.SBT_ADDRESS_CTG || '';
 // Inizializza una connessione a un database SQLite per Veramo,
 // utilizzato per archiviare identità e credenziali. Gestisce
 // le migrazioni, attiva il logging e specifica le entità 
