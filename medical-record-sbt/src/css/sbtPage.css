@@ -1,0 +1,67 @@
+body {
+    background-color: #f8f9fa;
+  }
+
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .sbt-header {
+    color: #007bff;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .text-success {
+    font-weight: bold;
+  }
+
+
+  .sbt-card.visible {
+    display: inline-block !important;
+  }
+
+  .loading {
+    display: none;
+    text-align: center;
+  }
+
+  .treatment-box {
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .treatment-pending {
+    border-color: #ffc107;
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  .treatment-eligible {
+    border-color: #28a745;
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .treatment-not-eligible {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .treatment-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
