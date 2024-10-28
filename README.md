@@ -25,20 +25,32 @@ Il protocollo è progettato per garantire la privacy dei pazienti in contesti sa
 
 ### 5. Autenticazione presso le strutture sanitarie
 - Il paziente utilizza il proprio **SBT** presso la struttura sanitaria, che autentica il token e autorizza il trattamento. 
-- Grazie alla privacy garantita dalla ZKP, la struttura conosce solo l’autorizzazione al trattamento e non la specifica condizione sanitaria. 
 
 --- 
 
+## Panoramica delle Tipologie di Soulbound Token (SBT)
+
+### 1. Soulbound Token a Singola Categoria
+
+- **Descrizione**: L’SBT a Singola Categoria offre un’autorizzazione limitata al paziente per accedere ai trattamenti relativi a una specifica malattia dimostrata. Questa tipologia di token è utile per garantire che l'accesso ai trattamenti sia strettamente controllato.
+- **Esempio**: Se un paziente dimostra di avere asma, l'SBT a Singola Categoria autorizza esclusivamente i trattamenti per l’asma, senza estendere l'accesso ad altre condizioni respiratorie, come la bronchite cronica o la BPCO.
+- **Vantaggi**:
+  - **Maggiore controllo**: L'accesso limitato ai dati sanitari riduce il rischio di esposizione a informazioni sensibili.
+  - **Privacy aumentata**: Poiché si condivide solo l'autorizzazione per una singola malattia, si minimizzano le informazioni rivelate a terzi.
+
+### 2. Soulbound Token Multi-Categoria
+
+- **Descrizione**: L’SBT Multi-Categoria offre un’autorizzazione estesa che consente al paziente di accedere ai trattamenti per tutte le malattie correlate appartenenti a una stessa categoria diagnostica, oltre alla condizione specifica dimostrata.
+- **Esempio**: Se un paziente dimostra di avere una condizione nella categoria delle malattie metaboliche, come il diabete, l'SBT Multi-Categoria consente l'accesso ai trattamenti non solo per il diabete, ma anche per altre condizioni correlate come dislipidemia e obesità.
+- **Vantaggi**:
+  - **Ampia accessibilità**: Permette l'accesso a una gamma di trattamenti necessari, senza richiedere verifiche ripetute per condizioni correlate.
+  - **Privacy superiore**: Autorizzando l'accesso a una categoria piuttosto che a una singola condizione, si riduce il rischio di divulgazione di informazioni specifiche, mantenendo così un alto livello di riservatezza.
+  - **Gestione efficiente**: Facilita un approccio integrato alla cura, permettendo al paziente di ricevere trattamenti per diverse condizioni correlate senza la necessità di ulteriori autorizzazioni.
+
+--- 
 ## Gestione delle credenziali con Veramo e Blockchain
 - **Veramo** viene utilizzato per la gestione delle credenziali e l’interazione tra wallet digitale, SNS e strutture sanitarie, facilitando l’integrazione delle VC e la generazione delle VP.
 - L’infrastruttura di **blockchain** supporta la verifica dell’integrità e autenticità delle VC e degli SBT, garantendo un registro sicuro e immutabile per il controllo delle autorizzazioni in modo decentralizzato.
 
-
-## Vantaggi del protocollo
-- **Massima privacy**: Utilizzando ZKP e Selective Disclosure, le informazioni sensibili sono condivise in modo sicuro e limitato.
-- **Controllo autonomo**: Il paziente può gestire le proprie autorizzazioni e informazioni sanitarie in modo autonomo e sicuro.
-- **Interoperabilità e sicurezza**: Veramo e la blockchain assicurano che le credenziali siano facilmente verificabili e autentiche senza compromessi sulla riservatezza.
-
----
 
 Questo protocollo innovativo promuove un sistema di autenticazione e autorizzazione sicuro e rispettoso della privacy del paziente, offrendo alle strutture sanitarie uno strumento efficiente per gestire i trattamenti autorizzati e riducendo l'esposizione dei dati sensibili. 
