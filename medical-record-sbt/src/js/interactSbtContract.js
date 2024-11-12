@@ -54,7 +54,7 @@ logoutButton.addEventListener("click", () => {
 });
 
 async function fetchSBT(address) {
-  const contractAddress = "0x331e1356344cedd99e28c27deb5339166e916c59"; // Replace with actual contract address
+  const contractAddress = "0x1a9777470649a5cf4b89bc865dfcd123422c76a1"; //rimpiazza con l'indirizzo del contratto SBT
   const sbtAbi = [
     "function getMedicalRecord(address owner) view returns (uint256 tokenID, string memory id, string memory name, string memory dateOfBirth, string memory healthID, bool authenticated)",
     "function canUserReceiveTreatment(string memory did, string memory hashedDiagnosis) view returns (bool)",
@@ -276,7 +276,7 @@ async function revokeSBT(contrAdd) {
 
 
 async function fetchSBTMulti(address) {
-  const contractAddress = "0x5b2073dd741ba8edfec887016b23e746f5dec48c"; // Indirizzo del contratto
+  const contractAddress = "0x04f5ae8fb847690cde2b62dd1be5c20653658bf3"; // Indirizzo del contratto
   const sbtMultiAbi = [
     "function getMedicalRecord(address owner) view returns (uint256 tokenID, string memory id, string memory name, string memory dateOfBirth, string memory healthID, bool authenticated)",
     "function canUserReceiveTreatment(string memory did, string memory categoryHash) view returns (bool)"

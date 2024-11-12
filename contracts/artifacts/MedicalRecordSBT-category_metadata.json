@@ -974,10 +974,10 @@
 			]
 		},
 		"verifier-category.sol": {
-			"keccak256": "0x98ca6353adcdd0c9fdeb6fabdaebc2b1350bb9add1e6c241faebe1b957ed749c",
+			"keccak256": "0x322a00d6791070fb5cb20548302fa79f719c1860cc29c2913bb7fad6ad78ffe5",
 			"urls": [
-				"bzz-raw://d991f04e5dc041414d508a38e840dc7f5782be02c94ed68c71dbf5258c24f3ca",
-				"dweb:/ipfs/QmbA7A2YLoxgKfwL5HcRmGwWh51w93cWnxhfS8MRu9n2FG"
+				"bzz-raw://6c23b78d78e9ca3c323b8ddb820da359e3c05e9b6a7ed04757c5c18925406fa6",
+				"dweb:/ipfs/QmRPf9vSouRnoBwravh7jpkC8nt9HvUDHgUDDPAbLTQBgc"
 			]
 		}
 	},

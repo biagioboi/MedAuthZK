@@ -1,0 +1,4 @@
+Compiling circuit.zok
+
+Compiled code written to 'out'
+Number of constraints: 81

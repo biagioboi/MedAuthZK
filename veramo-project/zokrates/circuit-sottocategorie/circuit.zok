@@ -16,37 +16,37 @@ def main(private field hashDiagnosiBreve, private field malattiaID, private fiel
     Malattia[4] malattie = [
         Malattia {
             id: 0,
-            hashNumerico: 4573,
+            hashNumerico: 3897,
             sottocategorie: [
-                Sottocategoria { hashNumerico: 1148 }, // Cancro al seno
-                Sottocategoria { hashNumerico: 1228 }, // Cancro ai polmoni
-                Sottocategoria { hashNumerico: 435 }   // Melanoma
+                Sottocategoria { hashNumerico: 3335 }, // Cancro al seno
+                Sottocategoria { hashNumerico: 2151 }, // Cancro ai polmoni
+                Sottocategoria { hashNumerico: 3067 }   // Melanoma
             ]
         },
         Malattia {
             id: 1,
-            hashNumerico: 4541,
+            hashNumerico: 2766,
             sottocategorie: [
-                Sottocategoria { hashNumerico: 1466 }, // Infarto
-                Sottocategoria { hashNumerico: 1525 }, // Insufficienza cardiaca
-                Sottocategoria { hashNumerico: 3855 }  // Aritmia
+                Sottocategoria { hashNumerico: 4014 }, // Infarto
+                Sottocategoria { hashNumerico: 3840 }, // Insufficienza cardiaca
+                Sottocategoria { hashNumerico: 4901 }  // Aritmia
             ]
         },
         Malattia {
             id: 2,
-            hashNumerico: 3731,
+            hashNumerico: 900,
             sottocategorie: [
-                Sottocategoria { hashNumerico: 280 },   // Diabete di tipo 1
-                Sottocategoria { hashNumerico: 1135 },  // Diabete di tipo 2
+                Sottocategoria { hashNumerico: 2511 },   // Diabete di tipo 1
+                Sottocategoria { hashNumerico: 2550 },  // Diabete di tipo 2
                 Sottocategoria { hashNumerico: 0 }      // Placeholder per la terza sottocategoria
             ]
         },
         Malattia {
             id: 3,
-            hashNumerico: 809,
+            hashNumerico: 40,
             sottocategorie: [
-                Sottocategoria { hashNumerico: 2624 }, // Insufficienza renale
-                Sottocategoria { hashNumerico: 1557 }, // Malattia renale policistica
+                Sottocategoria { hashNumerico: 2411 }, // Insufficienza renale
+                Sottocategoria { hashNumerico: 4506 }, // Malattia renale policistica
                 Sottocategoria { hashNumerico: 0 }      // Placeholder per la terza sottocategoria
             ]
         }

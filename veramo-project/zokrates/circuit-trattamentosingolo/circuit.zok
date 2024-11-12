@@ -1,0 +1,31 @@
+// Definizione di una struttura per una sottocategoria
+struct Sottocategoria {
+    field hashNumerico;
+}
+
+// Funzione principale per verificare la sottocategoria
+def main(private field sottocategoriaID) -> field {
+    // Array delle sottocategorie (senza considerare la malattia)
+    Sottocategoria[10] sottocategorie = [
+        Sottocategoria { hashNumerico: 1148 }, // Cancro al seno
+        Sottocategoria { hashNumerico: 1228 }, // Cancro ai polmoni
+        Sottocategoria { hashNumerico: 435 },  // Melanoma
+        Sottocategoria { hashNumerico: 1466 }, // Infarto
+        Sottocategoria { hashNumerico: 1525 }, // Insufficienza cardiaca
+        Sottocategoria { hashNumerico: 3855 }, // Aritmia
+        Sottocategoria { hashNumerico: 280 },  // Diabete di tipo 1
+        Sottocategoria { hashNumerico: 1135 }, // Diabete di tipo 2
+        Sottocategoria { hashNumerico: 2624 }, // Insufficienza renale
+        Sottocategoria { hashNumerico: 1557 }  // Malattia renale policistica
+    ];
+
+    // Variabile per tenere traccia della validità, inizia a 0
+    field mut isValid = 0;
+
+    // Ciclo per verificare la corrispondenza dell'hash della sottocategoria
+    for u32 i in 0..10 {  // 10 sottocategorie totali
+        isValid = (sottocategorie[i].hashNumerico == sottocategoriaID) ? 1 : isValid;
+    }
+
+    return isValid;  // Ritorna 1 se l'hash della sottocategoria è valido, altrimenti 0
+}

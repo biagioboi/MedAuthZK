@@ -1,0 +1,12 @@
+{
+  "inputs": [
+    {
+      "name": "sottocategoriaID",
+      "public": false,
+      "type": "field"
+    }
+  ],
+  "output": {
+    "type": "field"
+  }
+}

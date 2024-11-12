@@ -1,11 +1,11 @@
 {
-  "did": "did:ethr:private:0x03a8b41d999a90e0f17d0afbaf8a328d28f64fd8df19885b5a52a0b5f0cdec08ad",
-  "controllerKeyId": "04a8b41d999a90e0f17d0afbaf8a328d28f64fd8df19885b5a52a0b5f0cdec08ade61e0bdcb77dce4df89b129af4f8c8cf17f23f925a36bb3650f44a0b95f1e859",
+  "did": "did:ethr:private:0x02488c431955c9bf8b93681b7c1df6ceadd27e31e168ac56d142009ae4124604c1",
+  "controllerKeyId": "04488c431955c9bf8b93681b7c1df6ceadd27e31e168ac56d142009ae4124604c178f457f830dc80ee12f7728b4d78ca8daa15d82a24f811eab72fe838014fe7a2",
   "keys": [
     {
       "type": "Secp256k1",
-      "kid": "04a8b41d999a90e0f17d0afbaf8a328d28f64fd8df19885b5a52a0b5f0cdec08ade61e0bdcb77dce4df89b129af4f8c8cf17f23f925a36bb3650f44a0b95f1e859",
-      "publicKeyHex": "04a8b41d999a90e0f17d0afbaf8a328d28f64fd8df19885b5a52a0b5f0cdec08ade61e0bdcb77dce4df89b129af4f8c8cf17f23f925a36bb3650f44a0b95f1e859",
+      "kid": "04488c431955c9bf8b93681b7c1df6ceadd27e31e168ac56d142009ae4124604c178f457f830dc80ee12f7728b4d78ca8daa15d82a24f811eab72fe838014fe7a2",
+      "publicKeyHex": "04488c431955c9bf8b93681b7c1df6ceadd27e31e168ac56d142009ae4124604c178f457f830dc80ee12f7728b4d78ca8daa15d82a24f811eab72fe838014fe7a2",
       "meta": {
         "algorithms": [
           "ES256K",

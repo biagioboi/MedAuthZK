@@ -2,87 +2,87 @@
   {
     "id": 0,
     "nome": "Cancro",
-    "salt": "85eda98aa1da4c03",
+    "salt": "d28c79889568fb6f",
     "sottocategorie": [
       {
         "nome": "Cancro al seno",
-        "hash": "a6e42743c38a43a0afce6ed621472c4b5ad107082f403426e7768671d30cdbd9",
-        "hashNumerico": "1148"
+        "hash": "0301513ab4dfa762e7d98f83545c8f8cf30e685645cddc26209ebe7095d3a89e",
+        "hashNumerico": "3335"
       },
       {
         "nome": "Cancro ai polmoni",
-        "hash": "d91193da1331bb35ccd05862fae5d9c429a7c18f727622fce5fed8c45e2e2d97",
-        "hashNumerico": "1228"
+        "hash": "55d286ee58bd4a5810599ef74a55b179aa3d8a193392459e221d8d3f58cb9677",
+        "hashNumerico": "2151"
       },
       {
         "nome": "Melanoma",
-        "hash": "ec21c64a819acbe72633f42959fa8699dad8032b32ff95fb6337278257e8dd66",
-        "hashNumerico": "435"
+        "hash": "b8c50dc641da9f9bf032af53bf8a55213287c3da78b9e2c7d89a71a96ccab822",
+        "hashNumerico": "3067"
       }
     ],
-    "hash": "80b69f2f689efa9543c0225fb7c6ca94cdb7067b2e02731e89c38c1351c4fd1c",
-    "hashNumerico": "4573"
+    "hash": "4acf978ff33a7695a0de4d0d18e62e7c0c75c8e7303bcc682d790ddc310914e3",
+    "hashNumerico": "3897"
   },
   {
     "id": 1,
     "nome": "Malattia cardiaca",
-    "salt": "9af3abfaea2b9f45",
+    "salt": "425158a8f7b755d5",
     "sottocategorie": [
       {
         "nome": "Infarto",
-        "hash": "4df44cb45dd0b25d0c55ddff4aacf90ea2ad22292a74a2cb3e0d5f5fcf957bc4",
-        "hashNumerico": "1466"
+        "hash": "73b883bf3a457e8805e24fd637a60bddf27799e0dbca1d5974bcfcb460b5ff0d",
+        "hashNumerico": "4014"
       },
       {
         "nome": "Insufficienza cardiaca",
-        "hash": "792145ccd0bd9653a897422dc5af8fe22cde119961ba02049fb56920329050d8",
-        "hashNumerico": "1525"
+        "hash": "0dd4c8e58facffecce125baaf477332b2bae692775c7cd08f04f728aaa266858",
+        "hashNumerico": "3840"
       },
       {
         "nome": "Aritmia",
-        "hash": "b2411400c45e8ae8f6396b5655f3835a3699526f8f77a5c7adeb4b9868aece66",
-        "hashNumerico": "3855"
+        "hash": "03a810b3be21a22b95aeb1357fce7b0abdd96e68589aac5e1575e3ec672735a3",
+        "hashNumerico": "4901"
       }
     ],
-    "hash": "0826fb43066e3b1ac177d76e895a048c28a8fa9adcae69d56e42c03ec4920069",
-    "hashNumerico": "4541"
+    "hash": "ff233de95d9e233c5ccdc3519e4a774c105723dbd2f3e7ce53c05d021c394a06",
+    "hashNumerico": "2766"
   },
   {
     "id": 2,
     "nome": "Diabete",
-    "salt": "022eb3c4c9167345",
+    "salt": "5f94e24eb0a3fed4",
     "sottocategorie": [
       {
         "nome": "Diabete di tipo 1",
-        "hash": "96eb14b95ce68df0a5ea60ead75563df0833faadad3d6b2b8f984ec1444f56fe",
-        "hashNumerico": "280"
+        "hash": "de8170aea11f8e177f3470c8ec126fa65d2602a0050efe3d727716382f2c3b60",
+        "hashNumerico": "2511"
       },
       {
         "nome": "Diabete di tipo 2",
-        "hash": "d1eceeb1383e4e7d6e03a5a15aeaf24fa15d0d22525f0a674955e6e3e4600763",
-        "hashNumerico": "1135"
+        "hash": "21e24315d6054be08deed2bc6c0e46bd921edc81eb375d9d39329967b1b92472",
+        "hashNumerico": "2550"
       }
     ],
-    "hash": "f738b026f8cfb030fb122f9cf64918a9d3ce7956042c36ca114d316205cac35d",
-    "hashNumerico": "3731"
+    "hash": "039b6dcfa8dd46c2ae500a54ca2369552defb3437024bd42bd00793b970f1434",
+    "hashNumerico": "900"
   },
   {
     "id": 3,
     "nome": "Malattia renale",
-    "salt": "de7708576fc4a746",
+    "salt": "8d96026682bc1711",
     "sottocategorie": [
       {
         "nome": "Insufficienza renale",
-        "hash": "2b5c1627d848bc486cd74c9fc57cb1ff28b61f087bf65a82130096ab3a55ba99",
-        "hashNumerico": "2624"
+        "hash": "9ed87aa4d19efdadc560a30a11b19d033bffb52242ba210e4371091c8966b7ae",
+        "hashNumerico": "2411"
       },
       {
         "nome": "Malattia renale policistica",
-        "hash": "be3e272dc55f203d782d293976ad6f2f803790527f6add072028a3915913276e",
-        "hashNumerico": "1557"
+        "hash": "0fc79398c3dddb0d5e25550fa3f39de42c58c0be1107e9265f5cba23e2cf65c0",
+        "hashNumerico": "4506"
       }
     ],
-    "hash": "8570ce975709d27ea14682ee2b537e8706eacd617357012ba1da2a6dca611cd8",
-    "hashNumerico": "809"
+    "hash": "17fcc37780773d060b8abd5041a8ff1cd332ac43102ac3e0c3f55d2006d79158",
+    "hashNumerico": "40"
   }
 ]

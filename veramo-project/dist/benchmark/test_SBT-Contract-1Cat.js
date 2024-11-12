@@ -13,7 +13,7 @@ const sbtContract = new ethers.Contract(SBT_ADDRESS, sbtAbi, wallet);
 // Funzione per leggere il DID dal file verifiableCredential.json
 function getDidFromCredential(filePath) {
     const credential = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return credential.credentialSubject.id; // Presupponendo che il DID sia in id
+    return credential.credentialSubject.id;
 }
 // Funzione per leggere le malattie dal file malattieDB.json
 function getMalattieFromDB(filePath) {
@@ -60,7 +60,7 @@ for (const malattia of malattie) {
     for (const sottocategoria of malattia.sottocategorie) {
         const subcategoryHash = sottocategoria.hash; // Hash della sottocategoria
         const subcategoryNome = sottocategoria.nome; // Nome della sottocategoria
-        console.log(`\nTesting subcategory: ${subcategoryNome}`);
+        console.log(`\nTesting sottocategoria: ${subcategoryNome}`);
         // Esegui il benchmark per ogni numero di iterazioni
         for (const iterations of iterationsArray) {
             let totalElapsedTime = 0; // Tempo totale per le iterazioni
