@@ -54,7 +54,6 @@ function runAllCommands() {
     console.timeEnd('Tempo canUserReceiveTreatment');
 
     console.log("-----------------------------------------\n");
-
     console.time('Tempo creazione presentazione con sottocategorie');
     runCommand('node ./dist/trattamento-categoria/create-presentation-sottocategoria.js'); // Comando per creare una presentazione con Selective Disclosure (con categorie)
     console.timeEnd('Tempo creazione presentazione con sottocategorie');

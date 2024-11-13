@@ -1,26 +1,40 @@
-import { execSync } from 'child_process';
-import { performance } from 'perf_hooks';
+import { execSync } from 'child_process'; // Importa il modulo child_process per eseguire comandi
+import fs from 'fs'; // Per scrivere su un file
+import { performance } from 'perf_hooks'; // Per misurare il tempo di esecuzione
 
-// Funzione per eseguire un comando e catturare l'output
-function runCommand(command, testType) {
+// Crea o apre il file CSV per salvare i dati
+const logStream = fs.createWriteStream('tempi_di_esecuzione-SETUP-SSI.csv', { flags: 'w' });
+logStream.write("Comando,Tempo di Esecuzione (s),Gas stimato (x)\n"); // Intestazione CSV
+
+// Funzione per eseguire un comando, catturare l'output, cercare la frase "Gas stimato" e registrare il risultato
+function runCommand(command, testType = 'Test') {
     const start = performance.now(); // Inizia a misurare il tempo per il comando
     console.log(`Esecuzione comando: ${command}`);
 
-    // Esegui il comando e cattura l'output
-    const output = execSync(command, { encoding: 'utf-8', stdio: 'pipe' });
+    try {
+        // Esegui il comando e cattura l'output
+        const output = execSync(command, { encoding: 'utf-8', stdio: 'pipe' });
 
-    const end = performance.now(); // Termina la misurazione del tempo
-    const durationInSeconds = ((end - start) / 1000).toFixed(2); // Calcola la durata in secondi e arrotonda a 2 decimali
+        const end = performance.now(); // Termina la misurazione del tempo
+        const durationInSeconds = ((end - start) / 1000).toFixed(2); // Calcola la durata in secondi e arrotonda a 2 decimali
 
-    // Cerca la frase "Gas stimato: x" nell'output
-    const gasMatch = output.match(/Gas stimato: (\d+)/);
-    const gasStimated = gasMatch ? gasMatch[1] : 0; // Se trovata, prendi il valore, altrimenti 0
+        // Cerca la frase "Gas stimato: x" nell'output
+        const gasMatch = output.match(/Gas stimato: (\d+)/);
+        const gasStimated = gasMatch ? gasMatch[1] : 0; // Se trovata, prendi il valore, altrimenti 0
 
-    // Mostra il risultato a schermo
-    console.log(`Tipo di test: ${testType}`);
-    console.log(`Comando: ${command}`);
-    console.log(`Tempo di esecuzione: ${durationInSeconds} s`);
-    console.log(`Gas stimato: ${gasStimated}\n`);
+        // Mostra il risultato a schermo
+        console.log(`Tipo di test: ${testType}`);
+        console.log(`Comando: ${command}`);
+        console.log(`Tempo di esecuzione: ${durationInSeconds} s`);
+        console.log(`Gas stimato: ${gasStimated}\n`);
+
+        // Salva il tempo e il gas nel file CSV, ma non l'output
+        logStream.write(`${command},${durationInSeconds} s,${gasStimated}\n`);
+
+    } catch (error) {
+        console.error(`Errore nell'esecuzione del comando: ${command}`);
+        console.error(error.message);
+    }
 }
 
 // Esegui i comandi in ordine
@@ -42,7 +56,6 @@ function runAllCommands() {
     runCommand('node ./dist/create-client-did.js', 'Creazione e registrazione client'); // Crea un DID per il client
     runCommand('node ./dist/register-client-did.js', 'Registrazione client'); // Registra il client
     console.timeEnd('Tempo creazione e registrazione client');
-
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale di esecuzione'); // Termina la misurazione del tempo totale
 
@@ -52,47 +65,21 @@ function runAllCommands() {
     console.time('Tempo totale esecuzione sottocategorie'); // Inizio misurazione tempo totale per le sottocategorie
     console.log("-----------------------------------------\n");
 
-    // Misura il tempo per creare la credenziale per le sottocategorie
     console.time('Tempo creazione credenziale per sottocategorie');
     runCommand('node ./dist/trattamento-categoria/create-credential-sottocategoria.js', 'Creazione credenziale sottocategorie');
     console.timeEnd('Tempo creazione credenziale per sottocategorie');
     console.log("\n\n");
-
-    // Misura il tempo per verificare la credenziale per le sottocategorie
-    console.time('Tempo verifica credenziale sottocategorie');
-    runCommand('node ./dist/trattamento-categoria/verify-credential-sottocategorie.js', 'Verifica credenziale sottocategorie');
-    console.timeEnd('Tempo verifica credenziale sottocategorie');
-    console.log("\n\n");
-
-    // Misura il tempo per creare la presentazione con Selective Disclosure per le sottocategorie
-    console.time('Tempo creazione presentazione per sottocategorie');
-    runCommand('node ./dist/trattamento-categoria/create-presentation-sottocategoria.js', 'Creazione presentazione sottocategorie');
-    console.timeEnd('Tempo creazione presentazione per sottocategorie');
-    
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale esecuzione sottocategorie'); // Termina la misurazione del tempo totale per le sottocategorie
-
     console.log("\n\n");
 
     // Quarta sezione: Trattamento per una singola malattia
     console.time('Tempo totale esecuzione trattamento singolo'); // Inizio misurazione tempo totale per il trattamento singolo
     console.log("-----------------------------------------\n");
-
     // Misura il tempo per creare la credenziale per il trattamento singolo
     console.time('Tempo creazione credenziale per trattamento singolo');
     runCommand('node ./dist/trattamento-singolo/create-credential.js', 'Creazione credenziale trattamento singolo');
     console.timeEnd('Tempo creazione credenziale per trattamento singolo');
-
-    // Misura il tempo per verificare la credenziale per il trattamento singolo
-    console.time('Tempo verifica credenziale trattamento singolo');
-    runCommand('node ./dist/trattamento-singolo/verify-credential.js', 'Verifica credenziale trattamento singolo');
-    console.timeEnd('Tempo verifica credenziale trattamento singolo');
-
-    // Misura il tempo per creare la presentazione per il trattamento singolo
-    console.time('Tempo creazione presentazione per trattamento singolo');
-    runCommand('node ./dist/trattamento-singolo/create-presentation.js', 'Creazione presentazione trattamento singolo');
-    console.timeEnd('Tempo creazione presentazione per trattamento singolo');
-
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale esecuzione trattamento singolo'); // Termina la misurazione del tempo totale per il trattamento singolo
 
