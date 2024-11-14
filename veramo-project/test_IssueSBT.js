@@ -38,6 +38,10 @@ function runAllCommands() {
     // Misura distintamente il tempo per ogni comando
     runCommand('node ./dist/veramo/setup.js'); // Comando per creare un issuer
 
+    
+    console.time('Tempo creazione verifica credenziale - singolo trattamento');
+    runCommand('node ./dist/trattamento-singolo/verify-credential.js');
+    console.timeEnd('Tempo creazione verifica credenziale - singolo trattamento');
 
     console.time('Tempo creazione presentazione singolo trattamento');
     runCommand('node ./dist/trattamento-singolo/create-presentation.js'); // Comando per creare una presentazione con Selective Disclosure (senza categorie)
@@ -54,6 +58,11 @@ function runAllCommands() {
     console.timeEnd('Tempo canUserReceiveTreatment');
 
     console.log("-----------------------------------------\n");
+       
+    console.time('Tempo creazione verifica credenziale - categoria trattamento');
+    runCommand('node ./dist/trattamento-categoria/verify-credential-sottocategorie.js');
+    console.timeEnd('Tempo creazione verifica credenziale - categoria trattamento');
+
     console.time('Tempo creazione presentazione con sottocategorie');
     runCommand('node ./dist/trattamento-categoria/create-presentation-sottocategoria.js'); // Comando per creare una presentazione con Selective Disclosure (con categorie)
     console.timeEnd('Tempo creazione presentazione con sottocategorie');
