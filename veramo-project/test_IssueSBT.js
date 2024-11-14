@@ -4,7 +4,7 @@ import { performance } from 'perf_hooks'; // Per misurare il tempo di esecuzione
 
 // Crea o apre il file CSV per salvare i dati
 const logStream = fs.createWriteStream('tempi_di_esecuzione-ISSUE_SBT.csv', { flags: 'w' });
-logStream.write("Comando,Tempo di Esecuzione (s),Gas stimato (x)\n"); // Intestazione CSV
+logStream.write("Comando,Tempo di Esecuzione (ms),Gas stimato\n"); // Intestazione CSV
 
 // Funzione per eseguire un comando, catturare l'output e cercare la frase "Gas stimato"
 function runCommand(command) {
@@ -18,7 +18,7 @@ function runCommand(command) {
     console.log(output);
 
     const end = performance.now(); // Termina la misurazione del tempo
-    const durationInSeconds = ((end - start) / 1000).toFixed(2); // Calcola la durata in secondi e arrotonda a 2 decimali
+    const durationInSeconds = ((end - start)).toFixed(2); // Calcola la durata in secondi e arrotonda a 2 decimali
 
     // Cerca la frase "Gas stimato: x" nell'output
     const gasMatch = output.match(/Gas stimato: (\d+)/);
