@@ -60,6 +60,7 @@ const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM
           defaultKms: 'local', // Imposta il sistema di gestione delle chiavi predefinito.
           network: 'private',   // Nome della rete, deve corrispondere a quello fornito nella configurazione del provider.
           rpcUrl: RPC_URL,     // URL RPC locale per la rete Besu.
+          registry: DID_REGISTRY_ADDRESS  //Registro per la gestione delle credenziali 
         }),
       },
     }),
@@ -71,6 +72,7 @@ const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM
             {
               name: 'private', // Nome della rete, deve corrispondere a quello fornito nella configurazione del provider.
               rpcUrl: RPC_URL, // URL RPC per la rete.
+              registry: DID_REGISTRY_ADDRESS //Registro per la gestione delle credenziali
             },
           ],
         }),

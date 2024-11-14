@@ -1,8 +1,8 @@
 Comando,Tempo di Esecuzione (s),Gas stimato (x)
-node ./dist/veramo/setup.js,1.80 s,0
-node ./dist/trattamento-singolo/create-presentation.js,2.34 s,0
-node ./dist/trattamento-singolo/requestSBT.js,7.12 s,835380
-node ./dist/trattamento-singolo/canUserReceiveTreatment.js,1.66 s,31569
+node ./dist/veramo/setup.js,2.01 s,0
+node ./dist/trattamento-singolo/create-presentation.js,2.53 s,0
+node ./dist/trattamento-singolo/requestSBT.js,10.79 s,835368
+node ./dist/trattamento-singolo/canUserReceiveTreatment.js,1.71 s,31569
 node ./dist/trattamento-categoria/create-presentation-sottocategoria.js,2.56 s,0
-node ./dist/trattamento-categoria/requestSBT-category.js,6.82 s,949372
-node ./dist/trattamento-categoria/canUserReceiveTreatmentCategory.js,1.63 s,31591
+node ./dist/trattamento-categoria/requestSBT-category.js,5.65 s,949396
+node ./dist/trattamento-categoria/canUserReceiveTreatmentCategory.js,1.71 s,31591
