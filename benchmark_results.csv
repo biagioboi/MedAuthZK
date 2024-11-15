@@ -1,0 +1,51 @@
+Categoria Principale,Sottocategoria,Iterazioni,Tempo Medio (ms),Conteggio Idonei,Conteggio Non Idonei
+Cancro,Cancro al seno,20,11.63,20,0
+Cancro,Cancro al seno,40,10.96,40,0
+Cancro,Cancro al seno,60,10.64,60,0
+Cancro,Cancro al seno,80,8.50,80,0
+Cancro,Cancro al seno,100,9.15,100,0
+Cancro,Cancro ai polmoni,20,9.50,0,20
+Cancro,Cancro ai polmoni,40,8.79,0,40
+Cancro,Cancro ai polmoni,60,10.45,0,60
+Cancro,Cancro ai polmoni,80,8.46,0,80
+Cancro,Cancro ai polmoni,100,6.89,0,100
+Cancro,Melanoma,20,8.62,0,20
+Cancro,Melanoma,40,9.80,0,40
+Cancro,Melanoma,60,8.66,0,60
+Cancro,Melanoma,80,8.22,0,80
+Cancro,Melanoma,100,7.48,0,100
+Malattia cardiaca,Infarto,20,7.45,0,20
+Malattia cardiaca,Infarto,40,6.76,0,40
+Malattia cardiaca,Infarto,60,7.14,0,60
+Malattia cardiaca,Infarto,80,8.71,0,80
+Malattia cardiaca,Infarto,100,18.92,0,100
+Malattia cardiaca,Insufficienza cardiaca,20,15.58,0,20
+Malattia cardiaca,Insufficienza cardiaca,40,18.30,0,40
+Malattia cardiaca,Insufficienza cardiaca,60,6.49,0,60
+Malattia cardiaca,Insufficienza cardiaca,80,7.83,0,80
+Malattia cardiaca,Insufficienza cardiaca,100,11.19,0,100
+Malattia cardiaca,Aritmia,20,6.63,0,20
+Malattia cardiaca,Aritmia,40,6.38,0,40
+Malattia cardiaca,Aritmia,60,6.48,0,60
+Malattia cardiaca,Aritmia,80,6.42,0,80
+Malattia cardiaca,Aritmia,100,7.48,0,100
+Diabete,Diabete di tipo 1,20,6.41,0,20
+Diabete,Diabete di tipo 1,40,6.32,0,40
+Diabete,Diabete di tipo 1,60,8.43,0,60
+Diabete,Diabete di tipo 1,80,6.46,0,80
+Diabete,Diabete di tipo 1,100,6.97,0,100
+Diabete,Diabete di tipo 2,20,11.49,0,20
+Diabete,Diabete di tipo 2,40,16.65,0,40
+Diabete,Diabete di tipo 2,60,14.50,0,60
+Diabete,Diabete di tipo 2,80,13.39,0,80
+Diabete,Diabete di tipo 2,100,7.54,0,100
+Malattia renale,Insufficienza renale,20,12.36,0,20
+Malattia renale,Insufficienza renale,40,7.16,0,40
+Malattia renale,Insufficienza renale,60,7.01,0,60
+Malattia renale,Insufficienza renale,80,6.36,0,80
+Malattia renale,Insufficienza renale,100,6.27,0,100
+Malattia renale,Malattia renale policistica,20,8.29,0,20
+Malattia renale,Malattia renale policistica,40,6.59,0,40
+Malattia renale,Malattia renale policistica,60,5.84,0,60
+Malattia renale,Malattia renale policistica,80,5.93,0,80
+Malattia renale,Malattia renale policistica,100,7.86,0,100

@@ -60,6 +60,14 @@ function runRevokeCommands() {
     runCommand('node ./dist/trattamento-categoria/revokeSBT-category.js');
     console.timeEnd('Tempo revoca SBT con categorie');
 
+    console.time('Tempo revoca SBT singolo');
+    runCommand('node ./dist/multi-sbt/revokeAllSBTs.js');
+    console.timeEnd('Tempo revoca SBT singolo');
+
+    console.time('Tempo revoca SBT con categorie');
+    runCommand('node ./dist/multi-sbt-ctg/revokeAllSBTs.js');
+    console.timeEnd('Tempo revoca SBT con categorie');
+
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale di esecuzione revoca'); // Termina la misurazione del tempo totale
     console.log("-----------------------------------------\n");

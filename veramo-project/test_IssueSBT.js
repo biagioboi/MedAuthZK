@@ -90,6 +90,46 @@ function runAllCommands() {
     console.time('Tempo canUserReceiveTreatmentCategory');
     runCommand('node ./dist/trattamento-categoria/canUserReceiveTreatmentCategory.js');
     console.timeEnd('Tempo canUserReceiveTreatmentCategory');
+    console.log("\n\n")
+
+    console.time('Tempo creazione verifica credenziale - singolo trattamento');
+    runCommand('node ./dist/multi-sbt/verify-credential.js');
+    console.timeEnd('Tempo creazione verifica credenziale - singolo trattamento');
+
+    console.time('Tempo creazione presentazione singolo trattamento');
+    runCommand('node ./dist/multi-sbt/create-presentation.js'); // Comando per creare una presentazione con Selective Disclosure (senza categorie)
+    console.timeEnd('Tempo creazione presentazione singolo trattamento');
+
+    // Misura il tempo per richiedere l'SBT
+    console.time('Tempo richiesta SBT');
+    runCommand('node ./dist/multi-sbt/requestSBTmulti.js'); // Comando per richiedere un SBT (singola malattia)
+    console.timeEnd('Tempo richiesta SBT');
+
+    // Misura il tempo per canUserReceiveTreatment
+    console.time('Tempo canUserReceiveTreatment');
+    runCommand('node ./dist/multi-sbt/canUserReceiveTreatment.js');
+    console.timeEnd('Tempo canUserReceiveTreatment');
+
+    console.log("-----------------------------------------\n");
+       
+    console.time('Tempo creazione verifica credenziale - categoria trattamento');
+    runCommand('node ./dist/multi-sbt-ctg/verify-credential-sottocategorie.js');
+    console.timeEnd('Tempo creazione verifica credenziale - categoria trattamento');
+
+    console.time('Tempo creazione presentazione con sottocategorie');
+    runCommand('node ./dist/multi-sbt-ctg/create-presentation-sottocategoria.js'); // Comando per creare una presentazione con Selective Disclosure (con categorie)
+    console.timeEnd('Tempo creazione presentazione con sottocategorie');
+
+    // Misura il tempo per richiedere l'SBT con categorie
+    console.time('Tempo richiesta SBT con categorie');
+    runCommand('node ./dist/multi-sbt-ctg/requestSBTmulti-category.js'); // Comando per richiedere un SBT (con categorie)
+    console.timeEnd('Tempo richiesta SBT con categorie');
+    
+    // Misura il tempo per canUserReceiveTreatmentCategory
+    console.time('Tempo canUserReceiveTreatmentCategory');
+    runCommand('node ./dist/multi-sbt-ctg/canUserReceiveTreatmentCategory.js');
+    console.timeEnd('Tempo canUserReceiveTreatmentCategory');
+
 
     console.log("-----------------------------------------\n");
     console.timeEnd('Tempo totale di esecuzione'); // Termina la misurazione del tempo totale
