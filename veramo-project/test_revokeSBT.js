@@ -27,12 +27,16 @@ function runCommand(command) {
 
     // Tasso di cambio ETH → EUR
     const ethToEur = 2937.44; // Tasso di cambio 1 ETH = 2937,44 EUR
+    const gweiToEth = 1 / 1_000_000_000; // Conversione da Gwei a ETH
 
-    // Prezzo di 1 ETH in Gwei = 1,000,000,000 Gwei
-    const gweiToEth = 1 / 1_000_000_000;
+    // Quantità di gas usato e gas price in Gwei
+    const gasPrice = 13.98;
+
+    // Calcolo del costo in ETH
+    const costInEth = (gasUsed * gasPrice) * gweiToEth;
 
     // Calcolo del costo in EUR
-    const costInEur = gasUsed * gweiToEth * ethToEur;
+    const costInEur = costInEth * ethToEur;
 
     // Salva il tempo, il gas e il costo in EUR nel file CSV, ma non l'output
     logStream.write(`${command},${durationInMilliseconds} ms,${gasUsed},${costInEur.toFixed(2)}\n`);
