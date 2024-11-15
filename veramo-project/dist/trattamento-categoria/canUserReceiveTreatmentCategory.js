@@ -23,9 +23,6 @@ function getMalattieFromDB(filePath) {
 // Funzione per verificare se un utente può ricevere un trattamento per una sottocategoria
 async function testCanUserReceiveTreatment(did, mainCategoryHash, subcategoryNome) {
     try {
-        // Stima del gas per la chiamata alla funzione canUserReceiveTreatment
-        const gasEstimate = await sbtContract.estimateGas.canUserReceiveTreatment(did, mainCategoryHash);
-        console.log(`Gas stimato: ${gasEstimate.toString()}`);
         // Chiamata alla funzione canUserReceiveTreatment con l'hash principale della malattia
         const canReceiveTreatment = await sbtContract.canUserReceiveTreatment(did, mainCategoryHash);
         // Log del risultato con il nome della sottocategoria
@@ -35,6 +32,8 @@ async function testCanUserReceiveTreatment(did, mainCategoryHash, subcategoryNom
         else {
             console.log(`L'utente con DID ${did} NON può ricevere trattamento per la sottocategoria "${subcategoryNome}".`);
         }
+        //Il gas non c'è poichè la funzione è definita come view
+        // ->  le funzioni view non consumano gas quando vengono chiamate in modalità di lettura 
     }
     catch (error) {
         console.error("Errore durante la verifica:", error);

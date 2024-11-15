@@ -101,7 +101,7 @@ for (const malattia of malattie) {
     }
 }
 // Calcola il tempo medio generale
-const overallAverageTime = ((totalAverageTime / results.length)).toFixed(2); // Calcola il tempo medio generale
+const overallAverageTime = (totalAverageTime / results.length).toFixed(2); // Calcola il tempo medio generale
 // Salva i risultati in un file CSV
 const csvHeader = "Categoria Principale,Sottocategoria,Iterazioni,Tempo Medio (ms),Conteggio Idonei,Conteggio Non Idonei\n";
 const csvRows = results.map(result => `${result.mainCategory},${result.subcategory},${result.iterations},${result.averageTime},${result.eligibleCount},${result.ineligibleCount}`).join("\n");

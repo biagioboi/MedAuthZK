@@ -1,0 +1,3 @@
+Comando,Tempo di Esecuzione (ms),Gas usato,Costo in €
+node ./dist/trattamento-singolo/revokeSBT.js,6896.23 ms,127210,0.37
+node ./dist/trattamento-categoria/revokeSBT-category.js,6669.28 ms,149550,0.44

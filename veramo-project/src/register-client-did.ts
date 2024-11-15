@@ -33,16 +33,15 @@ async function registerClientDID() {
   // Converti il DID document in bytes
   const documentBytes = ethers.utils.toUtf8Bytes(JSON.stringify(didDocument));
   console.log(documentBytes); // Mostra i bytes del documento nel log
-  
-  // Stima il gas necessario per la transazione
-  const estimatedGas = await ethrDid.estimateGas.updateDIDDocument(did, documentBytes);
-  console.log('Gas stimato:', estimatedGas.toString()); // Mostra il gas stimato
 
   // Invia la transazione per aggiornare il DID document
   const tx = await ethrDid.updateDIDDocument(did, documentBytes);
   const receipt = await tx.wait(); // Aspetta che la transazione venga confermata
 
   console.log('Transaction hash:', receipt.transactionHash); // Mostra l'hash della transazione
+  
+  // Ottieni il gas effettivamente utilizzato dalla transazione confermata
+  console.log('Gas usato:', receipt.gasUsed.toString());
 }
 
 // Esegui la funzione

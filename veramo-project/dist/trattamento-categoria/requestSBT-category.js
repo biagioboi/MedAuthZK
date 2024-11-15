@@ -51,7 +51,7 @@ async function issueSBT() {
         const receipt = await tx.wait();
         console.log("Transazione confermata nel blocco:", receipt.blockNumber);
         // Calcola il gas utilizzato
-        console.log(`Gas stimato: ${receipt.gasUsed.toString()}`);
+        console.log(`Gas usato: ${receipt.gasUsed.toString()}`);
         // Cattura l'evento SBTIssued
         const filter = sbtContract.filters.SBTIssued();
         const events = await sbtContract.queryFilter(filter, receipt.blockNumber);

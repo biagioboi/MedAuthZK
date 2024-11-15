@@ -1,8 +1,9 @@
-Comando,Tempo di Esecuzione (s),Gas stimato (x)
-node ./dist/veramo/setup.js,2.73 s,0
-node ./dist/create-issuer-did.js,1.72 s,0
-node ./dist/register-issuer-did.js,8.38 s,604636
-node ./dist/create-client-did.js,1.71 s,0
-node ./dist/register-client-did.js,11.50 s,167326
-node ./dist/trattamento-categoria/create-credential-sottocategoria.js,1.72 s,0
-node ./dist/trattamento-singolo/create-credential.js,1.66 s,0
+Comando,Tempo di Esecuzione (ms),Gas usato,Costo in €
+Comando,Tempo di esecuzione,Gas usato
+node ./dist/veramo/setup.js,1290.43 ms,0,0.00
+node ./dist/create-issuer-did.js,1420.15 ms,0,0.00
+node ./dist/register-issuer-did.js,7964.42 ms,604636,1.78
+node ./dist/create-client-did.js,1419.39 ms,0,0.00
+node ./dist/register-client-did.js,6622.13 ms,595826,1.75
+node ./dist/trattamento-categoria/create-credential-sottocategoria.js,1289.74 ms,0,0.00
+node ./dist/trattamento-singolo/create-credential.js,1377.63 ms,0,0.00

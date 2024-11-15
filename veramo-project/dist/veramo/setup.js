@@ -57,7 +57,7 @@ const agent = createAgent({
                     defaultKms: 'local', // Imposta il sistema di gestione delle chiavi predefinito.
                     network: 'private', // Nome della rete, deve corrispondere a quello fornito nella configurazione del provider.
                     rpcUrl: RPC_URL, // URL RPC locale per la rete Besu.
-                    registry: '0x5d168adb7c410b94c524373c86b7c2ad5957bde0',
+                    registry: DID_REGISTRY_ADDRESS //Registro per la gestione delle credenziali 
                 }),
             },
         }),
@@ -69,7 +69,7 @@ const agent = createAgent({
                         {
                             name: 'private', // Nome della rete, deve corrispondere a quello fornito nella configurazione del provider.
                             rpcUrl: RPC_URL, // URL RPC per la rete.
-                            registry: '0x5d168adb7c410b94c524373c86b7c2ad5957bde0',
+                            registry: DID_REGISTRY_ADDRESS //Registro per la gestione delle credenziali
                         },
                     ],
                 }),
