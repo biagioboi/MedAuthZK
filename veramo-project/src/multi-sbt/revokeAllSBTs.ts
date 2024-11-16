@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ethers, providers } from "ethers";
-import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI } from "../veramo/setup.js";
+import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI, ADDRESS_ACCOUNT } from "../veramo/setup.js";
 import path from 'path'; 
 
 const provider = new providers.JsonRpcProvider(RPC_URL);
@@ -18,33 +18,44 @@ const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 const sbtContract = new ethers.Contract(SBT_ADDRESS_MULTI, sbtAbi, wallet);
 
 // Funzione per recuperare gli SBTs associati a un indirizzo
-async function getSBTs(holder: string) {
+async function getSBTs() {
   let totalGasUsed = ethers.BigNumber.from(0); // Inizializza il contatore del gas totale
+  const holder = ADDRESS_ACCOUNT;
 
   try {
     console.log(`Recuperando gli SBTs per l'indirizzo: ${holder}`);
+    const startTotalTime = performance.now(); // Inizio misurazione del tempo totale
 
     // Assumiamo che il contratto abbia una funzione getAllSBTsForAddress(holder)
     const sbts = await sbtContract.getAllSBTsForAddress(holder);
 
     if (sbts.length === 0) {
-        console.log(`Nessun SBT trovato per l'indirizzo ${holder}.`);
+      console.log(`Nessun SBT trovato per l'indirizzo ${holder}.`);
     } else {
-        console.log(`Trovati ${sbts.length} SBTs per l'indirizzo ${holder}:`);
-        
-        for (let tokenID of sbts) {
-            console.log(`\t- Token ID: ${tokenID.toString()}`);
+      console.log(`Trovati ${sbts.length} SBTs per l'indirizzo ${holder}:`);
 
-            // Esegui la funzione di revoca per ogni tokenID e somma il gas usato
-            const gasUsedForTx = await revokeSBT(tokenID);
-            totalGasUsed = totalGasUsed.add(gasUsedForTx);
-        }
+      for (let tokenID of sbts) {
+        console.log(`\t- Token ID: ${tokenID.toString()}`);
+
+        const startIterationTime = performance.now(); // Inizio misurazione tempo per singola iterazione
+
+        // Esegui la funzione di revoca per ogni tokenID e somma il gas usato
+        const gasUsedForTx = await revokeSBT(tokenID);
+        totalGasUsed = totalGasUsed.add(gasUsedForTx);
+
+        const endIterationTime = performance.now(); // Fine misurazione tempo per singola iterazione
+        console.log(`Tempo impiegato per revocare il Token ID ${tokenID}: ${(endIterationTime - startIterationTime).toFixed(2)} ms.`);
+      }
     }
+
+    const endTotalTime = performance.now(); // Fine misurazione del tempo totale
+    console.log(`Tempo impiegato: ${(endTotalTime - startTotalTime).toFixed(2)} ms`);
+    
   } catch (error) {
     console.error("Errore nel recupero degli SBTs:", error);
   }
 
-  // Alla fine, stampiamo il gas totale utilizzato
+  // Alla fine, stampa il gas totale utilizzato
   console.log(`Gas usato: ${totalGasUsed.toString()}`);
 }
 
@@ -72,5 +83,4 @@ async function revokeSBT(tokenID: string) {
 }
 
 // Eseguiamo la funzione getSBTs passando l'indirizzo del holder
-const holderAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57";  // Sostituisci con l'indirizzo dell'utente
-getSBTs(holderAddress).catch(console.error);
+getSBTs().catch(console.error);

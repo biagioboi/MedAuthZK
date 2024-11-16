@@ -79,8 +79,10 @@ async function issueSBT() {
       [zkpProofData.c[0], zkpProofData.c[1]],
     ];
 
-    // Chiamata alla funzione requestSBT con i nuovi dati
-    const tx = await sbtContract.requestSBT(
+    const startTotal = performance.now(); // Inizio della misurazione del tempo totale
+
+  // Chiamata alla funzione requestSBT con i nuovi dati
+  const tx = await sbtContract.requestSBT(
       holder,
       name,
       dateOfBirth,
@@ -89,15 +91,19 @@ async function issueSBT() {
       categoria, // Nuovo campo "categoria" incluso nella chiamata
       proof,
       inputs
-    );
-    console.log("Transazione inviata:", tx.hash);
+  );
+  console.log("Transazione inviata:", tx.hash);
 
-    // Aspetta la conferma della transazione
-    const receipt = await tx.wait();
-    console.log("Transazione confermata nel blocco:", receipt.blockNumber);
+  // Aspetta la conferma della transazione
+  const receipt = await tx.wait();
+  console.log("Transazione confermata nel blocco:", receipt.blockNumber);
 
-    // Calcola il gas utilizzato
-    console.log(`Gas usato: ${receipt.gasUsed.toString()}`);
+  // Calcola il gas utilizzato
+  console.log(`Gas usato: ${receipt.gasUsed.toString()}`);
+
+  const endTotal = performance.now(); // Fine della misurazione del tempo totale
+  const totalDuration = (endTotal - startTotal).toFixed(2); // Calcola il tempo totale impiegato
+  console.log(`Tempo impiegato: ${totalDuration} ms`);
 
     // Cattura l'evento SBTIssued
     const filter = sbtContract.filters.SBTIssued();

@@ -22,6 +22,7 @@ async function generateZKP(categoriaHashNumerico, categoriaID, sottocategoriaHas
 }
 // Funzione per creare una presentazione verificabile
 async function createPresentation() {
+    const startTotal = performance.now(); // Inizio della misurazione del tempo totale
     // Carica la Verifiable Credential da un file
     const verifiedCredentialFile = JSON.parse(fs.readFileSync('./outputs/verifiedCredential-sottocategoria.json', 'utf8'));
     const verifiedCredential = verifiedCredentialFile.verifiableCredential;
@@ -55,6 +56,10 @@ async function createPresentation() {
     const verificationResult = await agent.verifyPresentation({ presentation: vp });
     // Log del risultato della verifica
     console.log('Risultato verifica presentazione:', verificationResult.verified);
+    // Tempo totale impiegato
+    const endTotal = performance.now(); // Fine della misurazione del tempo totale
+    const totalDuration = (endTotal - startTotal).toFixed(2); // Calcola il tempo totale
+    console.log(`Tempo impiegato: ${totalDuration} ms`);
     console.log('Sto salvando la presentazione...');
     // Percorso della cartella di output
     const outputDir = 'outputs';

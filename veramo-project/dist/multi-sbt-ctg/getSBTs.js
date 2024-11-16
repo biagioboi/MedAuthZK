@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ethers, providers } from "ethers";
-import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI_CTG } from "../veramo/setup.js";
+import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI_CTG, ADDRESS_ACCOUNT } from "../veramo/setup.js";
 import path from 'path';
 const provider = new providers.JsonRpcProvider(RPC_URL);
 // ABI del contratto SBT
@@ -12,7 +12,8 @@ const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 // Inizializza il contratto SBT con il wallet
 const sbtContract = new ethers.Contract(SBT_ADDRESS_MULTI_CTG, sbtAbi, wallet);
 // Funzione per recuperare gli SBTs associati a un indirizzo
-async function getSBTs(holder) {
+async function getSBTs() {
+    const holder = ADDRESS_ACCOUNT;
     try {
         console.log(`Recuperando gli SBTs per l'indirizzo: ${holder}`);
         // Assumendo che il contratto abbia una funzione getSBTs(address) che ritorni gli SBTs
@@ -41,6 +42,4 @@ async function getSBTs(holder) {
         console.error("Errore nel recupero degli SBTs:", error);
     }
 }
-// Eseguiamo la funzione getSBTs passando l'indirizzo del holder
-const holderAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"; // Sostituisci con l'indirizzo dell'utente
-getSBTs(holderAddress).catch(console.error);
+getSBTs().catch(console.error);

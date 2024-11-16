@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizza SBT</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link href="./css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./css/sbtPage.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Pulsante Home (cliccabile) a sinistra -->
+            <div>
+              <a href="index.html" class="btn btn-secondary mr-3">
+                <i class="fas fa-home"></i> Home
+              </a>
+            </div>
+      
+            <!-- Sezione Badge con Rete e Saldo -->
+            <div class="d-flex" style="gap: 10px;">
+              <div class="badge bg-secondary text-wrap" style="font-size: 1rem; padding: 10px 15px;">
+                <strong></strong> <span id="userAddress"></span>
+              </div>
+              <div class="badge bg-secondary text-wrap" style="font-size: 1rem; padding: 10px 15px;">
+                <strong>Rete:</strong> <span id="networkId"></span>
+              </div>
+              <div class="badge bg-secondary text-wrap" style="font-size: 1rem; padding: 10px 15px;">
+                <strong>Saldo:</strong> <span id="userBalance"></span> ETH
+              </div>
+            </div>
+      
+            <!-- Pulsante Logout a destra -->
+            <div>
+              <button id="logoutButton" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+  <div class="container mt-4">
+    <div id="loading" class="text-center">
+      <i class="fas fa-spinner fa-spin"></i> Caricamento...
+    </div>
+
+    <div id="sbts" class="mt-4"></div>
+
+    <div id="errorMessage" class="alert alert-danger mt-4" style="display: none;">
+    </div>
+  </div>
+  
+  <script src="./js/lib/ethers.umd.min.js.js"></script>
+  <script src="./js/lib/sweetalert2.all.min.js"></script>
+  <script src="./js/header.js"></script>
+  <script src="js/interactSBT-single.js"></script>
+
+
+</body>
+
+</html>

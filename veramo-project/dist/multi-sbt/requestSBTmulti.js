@@ -46,12 +46,16 @@ async function issueSBT() {
             ],
             [zkpProofData.c[0], zkpProofData.c[1]],
         ];
-        // Chiamata alla funzione requestSBT con i nuovi dati
+        // Misurazione del tempo complessivo per inviare e confermare la transazione
+        console.log("Inizio invio della transazione...");
+        const start = performance.now(); // Tempo iniziale
         const tx = await sbtContract.requestSBT(holder, name, dateOfBirth, healthID, diagnosis, proof, inputs);
         console.log("Transazione inviata:", tx.hash);
-        // Aspetta la conferma della transazione
-        const receipt = await tx.wait();
+        const receipt = await tx.wait(); // Aspetta la conferma della transazione
+        const end = performance.now(); // Tempo finale
         console.log("Transazione confermata nel blocco:", receipt.blockNumber);
+        // Calcola il tempo totale
+        console.log(`Tempo impiegato: ${(end - start).toFixed(2)} ms.`);
         // Calcola il gas utilizzato
         console.log(`Gas usato: ${receipt.gasUsed.toString()}`);
         // Cattura l'evento SBTIssued

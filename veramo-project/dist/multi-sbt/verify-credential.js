@@ -9,9 +9,13 @@ async function verifyCredential() {
         // Leggi e stampa la Verifiable Credential dal file
         const vc = JSON.parse(fs.readFileSync(credentialFilePath, 'utf8'));
         console.log('Verifiable Credential:', vc);
-        // Verifica la Verifiable Credential
-        const result = await agent.verifyCredential({ credential: vc });
+        // Misura il tempo per la verifica della Verifiable Credential
+        console.log('Inizio verifica della credenziale...');
+        const start = performance.now();
+        const result = await agent.verifyCredential({ credential: vc }); // Verifica la Verifiable Credential
+        const end = performance.now();
         console.log("Verificata? :" + result.verified);
+        console.log(`Tempo impiegato: ${(end - start).toFixed(2)} ms`);
         // Controlla se la verifica è andata a buon fine
         if (result.verified) {
             // Salva il risultato solo se la verifica è andata a buon fine

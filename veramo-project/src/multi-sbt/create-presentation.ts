@@ -41,10 +41,14 @@ async function createPresentation() {
   const diagnosisHashBreve = verifiedCredential.credentialSubject.diagnosi.hashNumerico.toString();
   const malattiaID = verifiedCredential.credentialSubject.diagnosi.malattiaID.toString(); 
 
+  // Misurazione del tempo complessivo
+  console.log("Inizio generazione e verifica della Verifiable Presentation...");
+  const start = performance.now();
+
   // Genera la prova ZKP per i valori sensibili
   const zkpProof = await generateZKP(diagnosisHashBreve);
-  console.log(zkpProof);
-  
+  console.log("Prova ZKP generata:", zkpProof);
+
   // Crea la Verifiable Presentation con i campi selezionati e la prova ZKP
   const vp = await agent.createVerifiablePresentation({
     presentation: {
@@ -63,6 +67,11 @@ async function createPresentation() {
 
   // Verifica la presentazione creata
   const verificationResult = await agent.verifyPresentation({ presentation: vp });
+
+  // Misurazione del tempo complessivo
+  const end = performance.now();
+  console.log(`Tempo impiegato: ${(end - start).toFixed(2)} ms.`);
+
 
   // Log del risultato della verifica
   console.log('Risultato verifica presentazione:', verificationResult.verified);

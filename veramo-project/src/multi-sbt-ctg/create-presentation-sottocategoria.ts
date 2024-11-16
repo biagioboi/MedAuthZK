@@ -30,20 +30,22 @@ async function generateZKP(categoriaHashNumerico: Int16Array, categoriaID: Int16
 
 // Funzione per creare una presentazione verificabile
 async function createPresentation() {
+  const startTotal = performance.now(); // Inizio della misurazione del tempo totale
+
   // Carica la Verifiable Credential da un file
   const verifiedCredentialFile = JSON.parse(fs.readFileSync('./outputs/verifiedCredential-sottocategoria.json', 'utf8'));
   const verifiedCredential = verifiedCredentialFile.verifiableCredential;
-
+  
   // Ottieni l'identificatore del client (client DID)
   const clientIdentifier = await agent.didManagerGetByAlias({ alias: 'client' });
-
+  
   // Estrai i valori sensibili
   const categoriaHashNumerico = verifiedCredential.credentialSubject.diagnosi.categoriaHashNumerico.toString();
-  const categoriaID = verifiedCredential.credentialSubject.diagnosi.categoriaID.toString(); 
+  const categoriaID = verifiedCredential.credentialSubject.diagnosi.categoriaID.toString();
   const sottocategoriaHash = verifiedCredential.credentialSubject.diagnosi.diagnosiHashNumerico.toString();
-
-  console.log(categoriaHashNumerico +", "+ categoriaID + ", "+ sottocategoriaHash)
-
+  
+  console.log(categoriaHashNumerico + ", " + categoriaID + ", " + sottocategoriaHash);
+  
   // Genera la prova ZKP per i valori sensibili
   const zkpProof = await generateZKP(categoriaHashNumerico, categoriaID, sottocategoriaHash);
   console.log(zkpProof);
@@ -64,12 +66,18 @@ async function createPresentation() {
     },
     proofFormat: 'jwt', // Formato di firma
   });
-
+  
   // Verifica la presentazione creata
   const verificationResult = await agent.verifyPresentation({ presentation: vp });
-
+  
   // Log del risultato della verifica
   console.log('Risultato verifica presentazione:', verificationResult.verified);
+  
+  // Tempo totale impiegato
+  const endTotal = performance.now(); // Fine della misurazione del tempo totale
+  const totalDuration = (endTotal - startTotal).toFixed(2); // Calcola il tempo totale
+  console.log(`Tempo impiegato: ${totalDuration} ms`);
+  
   console.log('Sto salvando la presentazione...');
   
   // Percorso della cartella di output

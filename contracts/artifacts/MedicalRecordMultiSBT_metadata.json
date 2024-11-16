@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -266,9 +266,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "did",
-						"type": "string"
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
 					},
 					{
 						"internalType": "string",
@@ -366,62 +366,9 @@
 						"type": "bool"
 					},
 					{
-						"components": [
-							{
-								"components": [
-									{
-										"internalType": "uint256",
-										"name": "X",
-										"type": "uint256"
-									},
-									{
-										"internalType": "uint256",
-										"name": "Y",
-										"type": "uint256"
-									}
-								],
-								"internalType": "struct Pairing.G1Point",
-								"name": "a",
-								"type": "tuple"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint256[2]",
-										"name": "X",
-										"type": "uint256[2]"
-									},
-									{
-										"internalType": "uint256[2]",
-										"name": "Y",
-										"type": "uint256[2]"
-									}
-								],
-								"internalType": "struct Pairing.G2Point",
-								"name": "b",
-								"type": "tuple"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint256",
-										"name": "X",
-										"type": "uint256"
-									},
-									{
-										"internalType": "uint256",
-										"name": "Y",
-										"type": "uint256"
-									}
-								],
-								"internalType": "struct Pairing.G1Point",
-								"name": "c",
-								"type": "tuple"
-							}
-						],
-						"internalType": "struct Verifier.Proof",
-						"name": "zkpProof",
-						"type": "tuple"
+						"internalType": "string",
+						"name": "diagnosis",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -991,11 +938,11 @@
 			]
 		},
 		"MedicalRecordMultSBT.sol": {
-			"keccak256": "0x3637d9cfceab1788b674216dfb63f0b65a5fb42f2e627f25a05ba35201f26a61",
+			"keccak256": "0x5855aa583d7a8b56334de533412cd3169f6708dbeefc2a3716144d40c9a79fde",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bff6b47a816bb239451dc107e2f2851aab2cc51249c74048d1e2cedff8c7b901",
-				"dweb:/ipfs/QmR2Y9katMGQaWAD4PJZ3KonJUKjT9Th8842UDRxhyvnxx"
+				"bzz-raw://be4ec04aebd3eb0b62eb479933224a69f8d3912e25191c18c785b7a85424c1d8",
+				"dweb:/ipfs/QmfDuyBo1PWRjCE9QfFKRYnNmPjs3GQd4KPSijCTK2u9jq"
 			]
 		},
 		"verifier.sol": {

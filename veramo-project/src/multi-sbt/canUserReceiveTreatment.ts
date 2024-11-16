@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ethers, providers } from "ethers";
-import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI } from "../veramo/setup.js";
+import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI, ADDRESS_ACCOUNT} from "../veramo/setup.js";
 import path from 'path'; 
 
 const provider = new providers.JsonRpcProvider(RPC_URL);
@@ -15,12 +15,6 @@ const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 // Inizializza il contratto SBT con il wallet
 const sbtContract = new ethers.Contract(SBT_ADDRESS_MULTI, sbtAbi, wallet);
 
-// Funzione per leggere il DID dal file verifiableCredential.json
-function getDidFromCredential(filePath: string) {
-    const credential = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return credential.credentialSubject.id; // Presupponendo che il DID sia in id
-}
-
 // Funzione per leggere le malattie dal file malattieDB.json
 function getMalattieFromDB(filePath: string) {
     const malattieDB = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -28,28 +22,27 @@ function getMalattieFromDB(filePath: string) {
 }
 
 // Funzione per verificare se un utente può ricevere un trattamento
-async function testCanUserReceiveTreatment(did: string, hashedDiagnosis: string, subcategoryNome: string) {
+async function testCanUserReceiveTreatment(hashedDiagnosis: string, subcategoryNome: string) {
+    const address_account = ADDRESS_ACCOUNT;
     try {
-        // Chiamata alla funzione canUserReceiveTreatment
-        const canReceiveTreatment = await sbtContract.canUserReceiveTreatment(did, hashedDiagnosis);
-
-        // Log del risultato
-        console.log(`L'utente con DID ${did} può ricevere trattamento per la diagnosi ${subcategoryNome}: ${canReceiveTreatment}`);
-        
-        //Il gas non c'è poichè la funzione è definita come view
-        // ->  le funzioni view non consumano gas quando vengono chiamate in modalità di lettura 
-
+      const start = performance.now(); // Inizio misurazione del tempo
+  
+      // Chiamata alla funzione canUserReceiveTreatment
+      const canReceiveTreatment = await sbtContract.canUserReceiveTreatment(address_account, hashedDiagnosis);
+  
+      const end = performance.now(); // Fine misurazione del tempo
+      console.log(`L'utente con indirizzo ${address_account} può ricevere trattamento per la diagnosi ${subcategoryNome}: ${canReceiveTreatment}`);
+      console.log(`Tempo impiegato: ${(end - start).toFixed(2)} ms.`);
+  
     } catch (error) {
-        console.error("Errore durante la verifica:", error);
+      console.error("Errore durante la verifica:", error);
     }
-}
-
+  }
 
 // Esempio di percorsi ai file
 const verifiableCredentialPath = path.join("./outputs", "credential.json");
 const malattieDBPath = path.join("./dist/utils", "categorieDB.json");
-// Estrazione del DID e delle malattie
-const didToTest = getDidFromCredential(verifiableCredentialPath);
+
 const malattie = getMalattieFromDB(malattieDBPath);
 // Esegui il test solo per le sottocategorie
 for (const malattia of malattie) {
@@ -58,7 +51,8 @@ for (const malattia of malattie) {
     for (const sottocategoria of malattia.sottocategorie) {
         const subcategoryHash = sottocategoria.hash; // Hash della sottocategoria
         const subcategoryNome = sottocategoria.nome; // Nome della sottocategoria
+        
         // Esegui la chiamata alla funzione di test per la sottocategoria
-        await testCanUserReceiveTreatment(didToTest, subcategoryHash, subcategoryNome);
+        await testCanUserReceiveTreatment(subcategoryHash, subcategoryNome);
     }
 }

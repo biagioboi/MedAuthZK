@@ -30,15 +30,22 @@ async function registerIssuerDID() {
     const ethrDid = new ethers.Contract(DID_REGISTRY_ADDRESS, [
         'function updateDIDDocument(string memory _did, bytes memory _document) public',
     ], wallet);
+    // Misura il tempo di esecuzione per l'aggiornamento del DID document
+    const startUpdateTime = performance.now(); // Inizia a misurare il tempo
     // Converte il DID document in bytes
     const documentBytes = ethers.utils.toUtf8Bytes(JSON.stringify(didDocument));
     // Invio della transazione per aggiornare il DID document
     const tx = await ethrDid.updateDIDDocument(issuerDidData.did, documentBytes);
     // Aspetta il completamento della transazione
     const receipt = await tx.wait();
-    console.log('Hash della transazione:', receipt.transactionHash); // Mostra l'hash della transazione
+    const endUpdateTime = performance.now(); // Termina la misurazione del tempo
+    const updateDuration = (endUpdateTime - startUpdateTime).toFixed(2); // Calcola il tempo impiegato in ms
+    // Mostra l'hash della transazione
+    console.log('Hash della transazione:', receipt.transactionHash);
     // Ottieni il gas effettivamente utilizzato dalla transazione confermata
     console.log('Gas usato:', receipt.gasUsed.toString());
+    // Stampa il tempo impiegato per l'aggiornamento del DID document
+    console.log(`Tempo impiegato: ${updateDuration} ms`);
 }
 // Esegui la funzione
 registerIssuerDID().catch(console.error); // Esegui la funzione e gestisci eventuali errori

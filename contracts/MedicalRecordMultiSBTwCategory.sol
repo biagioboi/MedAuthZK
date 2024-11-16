@@ -16,9 +16,8 @@ contract MedicalRecordSBT is ERC721 {
         string name; // Nome
         string dateOfBirth; // Data di nascita
         string healthID; // ID sanitario
-        mapping(string => mapping(string => bool)) authorizedTreatment; // Mappatura diagnosi -> categoria -> autorizzazione
-        string[] diagnosisKeys; // Lista delle diagnosi
-        mapping(string => string[]) diagnosisToCategories; // Diagnosi -> Lista di categorie
+        string diagnosisHash; // Hash della diagnosi
+        string categoryHash; // Hash della categoria
         bool authenticated; // Utente autenticato
     }
 
@@ -58,7 +57,7 @@ contract MedicalRecordSBT is ERC721 {
 
          // Controlla se l'utente ha già un SBT per questa diagnosi e categoria
         require(
-            !hasSBTForDiagnosisAndCategory(msg.sender, diagnosis, category),
+            !hasSBTForCategory(msg.sender, category),
             "SBT gia emesso per questa diagnosi e categoria"
         );
 
@@ -78,9 +77,9 @@ contract MedicalRecordSBT is ERC721 {
         newRecord.healthID = healthID;
         newRecord.authenticated = true;
 
-        newRecord.authorizedTreatment[diagnosis][category] = true;
-        newRecord.diagnosisKeys.push(diagnosis);
-        newRecord.diagnosisToCategories[diagnosis].push(category);
+        // Salva gli hash della diagnosi e della categoria
+        newRecord.diagnosisHash = diagnosis;
+        newRecord.categoryHash = category;
 
         // Aggiungi il token all'utente
         userTokens[msg.sender].push(_tokenCounter);
@@ -102,12 +101,6 @@ contract MedicalRecordSBT is ERC721 {
             delete didToAddress[record.id];
         }
 
-        // Cancella le diagnosi autorizzate
-        for (uint256 i = 0; i < record.diagnosisKeys.length; i++) {
-            string memory diagnosis = record.diagnosisKeys[i];
-            delete record.diagnosisToCategories[diagnosis];
-        }
-
         delete tokenToRecord[tokenID]; // Rimuovi la mappatura del token
         removeTokenFromUser(msg.sender, tokenID); // Rimuovi il token dall'utente
         _burn(tokenID); // Brucia il token
@@ -115,21 +108,25 @@ contract MedicalRecordSBT is ERC721 {
         emit SBTRevoked(msg.sender, tokenID);
     }
 
-    function canUserReceiveTreatment(string memory did, string memory diagnosis, string memory category) public view returns (bool) {
-        address userAddress = didToAddress[did];
-        require(userAddress != address(0), "Nessun utente associato a questo DID");
+    function canUserReceiveTreatment(address userAddress, string memory category) public view returns (bool) {
+        // Verifica che l'indirizzo non sia zero
+        require(userAddress != address(0), "Indirizzo non valido");
 
-        // Verifica se uno dei token dell'utente autorizza il trattamento
+        // Scansiona i token dell'utente
         for (uint256 i = 0; i < userTokens[userAddress].length; i++) {
             uint256 tokenID = userTokens[userAddress][i];
             MedicalRecord storage record = tokenToRecord[tokenID];
-            if (record.authorizedTreatment[diagnosis][category]) {
-                return true;
+
+            // Verifica se la categoria corrisponde (solo la categoria)
+            if (keccak256(abi.encodePacked(record.categoryHash)) == keccak256(abi.encodePacked(category))) {
+                return true;  // Se trova un match nella categoria, l'utente può ricevere il trattamento
             }
         }
 
-        return false;
+        return false;  // Nessun match trovato, l'utente non può ricevere il trattamento
     }
+
+
 
     function removeTokenFromUser(address user, uint256 tokenID) internal {
         uint256[] storage tokens = userTokens[user];
@@ -142,20 +139,31 @@ contract MedicalRecordSBT is ERC721 {
         }
     }
 
+    // Nuova funzione per ottenere tutti gli SBT di un dato address
+    function getAllSBTsForAddress(address user) public view returns (uint256[] memory) {
+        return userTokens[user]; // Restituisce la lista di tokenIDs associati all'indirizzo
+    }
+
     function getMedicalRecord(uint256 tokenID) public view returns (
+        uint256 tokenID_,
         string memory id,
         string memory name,
         string memory dateOfBirth,
         string memory healthID,
-        bool authenticated
+        bool authenticated,
+        string memory diagnosisHash, // L'hash della diagnosi
+        string memory categoryHash // L'hash della categoria
     ) {
         MedicalRecord storage record = tokenToRecord[tokenID];
         return (
+            record.tokenID,
             record.id,
             record.name,
             record.dateOfBirth,
             record.healthID,
-            record.authenticated
+            record.authenticated,
+            record.diagnosisHash,
+            record.categoryHash
         );
     }
 
@@ -170,20 +178,22 @@ contract MedicalRecordSBT is ERC721 {
     }
 
     // Verifica se l'utente ha già un SBT per una specifica diagnosi e categoria
-    function hasSBTForDiagnosisAndCategory(
+    function hasSBTForCategory(
         address user,
-        string memory diagnosis,
         string memory category
     ) public view returns (bool) {
         uint256[] storage tokens = userTokens[user];
         for (uint256 i = 0; i < tokens.length; i++) {
             uint256 tokenID = tokens[i];
             MedicalRecord storage record = tokenToRecord[tokenID];
-            if (record.authorizedTreatment[diagnosis][category]) {
-                return true;
+
+            // Verifica solo la categoria
+            if (keccak256(abi.encodePacked(record.categoryHash)) == keccak256(abi.encodePacked(category))) {
+                return true;  // Se trova un match nella categoria, restituisce true
             }
         }
-        return false;
+        return false;  // Se non trova un match, restituisce false
     }
+
 
 }

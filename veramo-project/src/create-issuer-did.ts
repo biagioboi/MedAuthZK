@@ -4,10 +4,20 @@ import * as path from 'path';
 
 // Funzione per creare un nuovo identificatore dell'emittente (issuer)
 async function createIssuer() {
-  // Crea un nuovo identificatore dell'emittente
+
+  // Misura il tempo di creazione del nuovo identificatore per l'issuer
+  const startIssuerCreation = performance.now(); // Inizia a misurare il tempo
+
+  // Crea un nuovo identificatore per l'issuer
   const issuerIdentifier = await agent.didManagerCreate({ alias: 'issuer' });
+
+  const endIssuerCreation = performance.now(); // Termina la misurazione del tempo
+  const issuerCreationDuration = (endIssuerCreation - startIssuerCreation).toFixed(2); // Calcola il tempo impiegato in ms
+
+
   console.log('Nuovo identificatore dell\'emittente creato');
   console.log(JSON.stringify(issuerIdentifier, null, 2));
+  console.log(`Tempo impiegato: ${issuerCreationDuration} ms`);
 
   // Percorso della cartella di output
   const outputDir = 'outputs';

@@ -1,27 +1,33 @@
-const loginButton = document.getElementById("loginButton");
-const sbtInfo = document.getElementById("sbtInfo");
-const detailsDiv = document.getElementById("details");
+const viewSbtButton = document.getElementById("viewSbtButton");
 
-loginButton.addEventListener("click", async () => {
-    if (typeof window.ethereum !== "undefined") {
-        try {
-            // Richiesta di accesso a MetaMask
-            await window.ethereum.request({ method: "eth_requestAccounts" });
-            const provider = new ethers.providers.Web3Provider(window.ethereum); // Corretto qui
-            const signer = provider.getSigner();
-            const address = await signer.getAddress();
-            console.log("Account connesso:", address);
+const loadingIndicator = document.getElementById("loading");
 
-            // Reindirizza a una nuova pagina che mostra l'indirizzo e il pulsante per l'SBT
-            localStorage.setItem("userAddress", address);  // Memorizza l'indirizzo nell'archiviazione locale
-            window.location.href = "sbtPage.html"; // Reindirizza alla nuova pagina
-        } catch (error) {
-            console.error("Errore di accesso:", error);
-            alert("Errore durante la connessione a MetaMask: " + error.message);
-        }
+
+document.getElementById('viewSbtButton').addEventListener('click', function() {
+    if (userAddress) {
+      // Reindirizza alla pagina sbt-page con il parametro type=single
+      window.location.href = "sbt-single.html";
     } else {
-        alert("MetaMask non è installato!");
+      Swal.fire({
+        icon: "error",
+        title: "Errore!",
+        text: "Indirizzo MetaMask non trovato!",
+      });
     }
-});
+  });
+  
+  document.getElementById('viewSbtMultiButton').addEventListener('click', function() {
+    if (userAddress) {
+      // Reindirizza alla pagina sbt-page con il parametro type=multi
+      window.location.href = "sbt-multi.html";
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Errore!",
+        text: "Indirizzo MetaMask non trovato!",
+      });
+    }
+  });
+
 
 

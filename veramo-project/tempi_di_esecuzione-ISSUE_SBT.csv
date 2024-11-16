@@ -1,18 +1,10 @@
 Comando,Tempo di Esecuzione (ms),Gas usato,Costo in €
-node ./dist/veramo/setup.js,1284.54 ms,0,0.00
-node ./dist/trattamento-singolo/verify-credential.js,1667.57 ms,0,0.00
-node ./dist/trattamento-singolo/create-presentation.js,2504.12 ms,0,0.00
-node ./dist/trattamento-singolo/requestSBT.js,6850.02 ms,835380,34.31
-node ./dist/trattamento-singolo/canUserReceiveTreatment.js,1502.99 ms,0,0.00
-node ./dist/trattamento-categoria/verify-credential-sottocategorie.js,1371.75 ms,0,0.00
-node ./dist/trattamento-categoria/create-presentation-sottocategoria.js,3181.65 ms,0,0.00
-node ./dist/trattamento-categoria/requestSBT-category.js,11197.13 ms,949372,38.99
-node ./dist/trattamento-categoria/canUserReceiveTreatmentCategory.js,1603.79 ms,0,0.00
-node ./dist/multi-sbt/verify-credential.js,1343.53 ms,0,0.00
-node ./dist/multi-sbt/create-presentation.js,2231.97 ms,0,0.00
-node ./dist/multi-sbt/requestSBTmulti.js,6632.14 ms,879107,36.10
-node ./dist/multi-sbt/canUserReceiveTreatment.js,1564.22 ms,0,0.00
-node ./dist/multi-sbt-ctg/verify-credential-sottocategorie.js,1281.94 ms,0,0.00
-node ./dist/multi-sbt-ctg/create-presentation-sottocategoria.js,2648.71 ms,0,0.00
-node ./dist/multi-sbt-ctg/requestSBTmulti-category.js,6626.45 ms,1011476,41.54
-node ./dist/multi-sbt-ctg/canUserReceiveTreatmentCategory.js,1530.16 ms,0,0.00
+node ./dist/veramo/setup.js,0.00 ms,0,0.00
+node ./dist/multi-sbt/verify-credential.js,224.15 ms,0,0.00
+node ./dist/multi-sbt/create-presentation.js,3080.30 ms,0,0.00
+node ./dist/multi-sbt/requestSBTmulti.js,4762.68 ms,851265,34.96
+node ./dist/multi-sbt/canUserReceiveTreatment.js,205.99 ms,0,0.00
+node ./dist/multi-sbt-ctg/verify-credential-sottocategorie.js,141.06 ms,0,0.00
+node ./dist/multi-sbt-ctg/create-presentation-sottocategoria.js,17166.40 ms,0,0.00
+node ./dist/multi-sbt-ctg/requestSBTmulti-category.js,4396.56 ms,921406,37.84
+node ./dist/multi-sbt-ctg/canUserReceiveTreatmentCategory.js,816.08 ms,0,0.00

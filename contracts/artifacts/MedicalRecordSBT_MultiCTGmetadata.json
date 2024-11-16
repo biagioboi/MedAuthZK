@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -272,13 +272,13 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "did",
-						"type": "string"
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
 					},
 					{
 						"internalType": "string",
-						"name": "categoryHash",
+						"name": "category",
 						"type": "string"
 					}
 				],
@@ -342,6 +342,11 @@
 				"name": "getMedicalRecord",
 				"outputs": [
 					{
+						"internalType": "uint256",
+						"name": "tokenID_",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "id",
 						"type": "string"
@@ -367,62 +372,14 @@
 						"type": "bool"
 					},
 					{
-						"components": [
-							{
-								"components": [
-									{
-										"internalType": "uint256",
-										"name": "X",
-										"type": "uint256"
-									},
-									{
-										"internalType": "uint256",
-										"name": "Y",
-										"type": "uint256"
-									}
-								],
-								"internalType": "struct Pairing.G1Point",
-								"name": "a",
-								"type": "tuple"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint256[2]",
-										"name": "X",
-										"type": "uint256[2]"
-									},
-									{
-										"internalType": "uint256[2]",
-										"name": "Y",
-										"type": "uint256[2]"
-									}
-								],
-								"internalType": "struct Pairing.G2Point",
-								"name": "b",
-								"type": "tuple"
-							},
-							{
-								"components": [
-									{
-										"internalType": "uint256",
-										"name": "X",
-										"type": "uint256"
-									},
-									{
-										"internalType": "uint256",
-										"name": "Y",
-										"type": "uint256"
-									}
-								],
-								"internalType": "struct Pairing.G1Point",
-								"name": "c",
-								"type": "tuple"
-							}
-						],
-						"internalType": "struct Verifier.Proof",
-						"name": "zkpProof",
-						"type": "tuple"
+						"internalType": "string",
+						"name": "diagnosisHash",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "categoryHash",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -437,16 +394,11 @@
 					},
 					{
 						"internalType": "string",
-						"name": "diagnosis",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
 						"name": "category",
 						"type": "string"
 					}
 				],
-				"name": "hasSBTForDiagnosisAndCategory",
+				"name": "hasSBTForCategory",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -1007,11 +959,11 @@
 			]
 		},
 		"MedicalRecordMultiSBTwCategory.sol": {
-			"keccak256": "0xbc6a508ff03500cd8d17b3411cbfacf4407c6605b2b6124e92d992d46d0f2948",
+			"keccak256": "0xc65594aefd624e5af077a7a89b91b92b2e7fd4429d0fa26f5de6b41051689a0e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ea3587448945e0952c8a04f8097fe0a3e8d4e8249c01e45bc3b03174b4ac9c2e",
-				"dweb:/ipfs/QmTBYgRyNunDe4rUtT7jHgVQGMV4ofssPe36GUsMPSnr9M"
+				"bzz-raw://e5d6036a71ac640ec713b9955ab6dce2c21e64526806dec098b0e8c42d5395f4",
+				"dweb:/ipfs/QmfNU7iVJ9K3RDSA1y1MfV3rtix2wWQVyQ5rJdEexgW11X"
 			]
 		},
 		"verifier-category.sol": {

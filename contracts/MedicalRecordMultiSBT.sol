@@ -16,8 +16,7 @@ contract MedicalRecordSBT is ERC721 {
         string name; // Nome
         string dateOfBirth; // Data di nascita
         string healthID; // ID sanitario
-        mapping(string => bool) authorizedTreatment; // Mappatura delle diagnosi e permessi di trattamento
-        string[] diagnosisKeys; // Lista delle diagnosi per eliminazione
+        string diagnosis; // Una sola diagnosi
         bool authenticated; // Utente autenticato con la malattia
         Verifier.Proof zkpProof; // Prova ZKP associata al record medico
     }
@@ -73,9 +72,8 @@ contract MedicalRecordSBT is ERC721 {
         // Salva la prova ZKP nel record medico
         record.zkpProof = zkpProof;
 
-        // Salva la diagnosi e autorizza il trattamento per essa
-        record.authorizedTreatment[diagnosis] = true;
-        record.diagnosisKeys.push(diagnosis); // Salva la diagnosi per eliminazione futura
+        // Associa la diagnosi al record medico (una sola diagnosi)
+        record.diagnosis = diagnosis;
 
         // Mappa il DID all'indirizzo dell'utente
         didToAddress[id] = msg.sender;
@@ -97,14 +95,8 @@ contract MedicalRecordSBT is ERC721 {
         string memory userDID = record.id;
         delete didToAddress[userDID];
 
-        // Cancella tutte le diagnosi autorizzate
-        for (uint256 i = 0; i < record.diagnosisKeys.length; i++) {
-            string memory diagnosis = record.diagnosisKeys[i];
-            delete record.authorizedTreatment[diagnosis];
-        }
-
-        // Cancella l'array di diagnosi
-        delete record.diagnosisKeys;
+        // Rimuovi la diagnosi dal record medico
+        delete record.diagnosis;
 
         // Cancella il record medico completo
         delete tokenToRecord[tokenID];
@@ -133,7 +125,7 @@ contract MedicalRecordSBT is ERC721 {
         string memory dateOfBirth,
         string memory healthID,
         bool authenticated,
-        Verifier.Proof memory zkpProof
+        string memory diagnosis // Restituisci una sola diagnosi
     ) {
         MedicalRecord storage record = tokenToRecord[tokenID];
         return (
@@ -143,7 +135,7 @@ contract MedicalRecordSBT is ERC721 {
             record.dateOfBirth,
             record.healthID,
             record.authenticated,
-            record.zkpProof // Restituisci anche la prova ZKP
+            record.diagnosis // Restituisci la diagnosi associata al record
         );
     }
 
@@ -157,8 +149,8 @@ contract MedicalRecordSBT is ERC721 {
             uint256 tokenID = userTokens[msg.sender][i];
             MedicalRecord storage record = tokenToRecord[tokenID];
 
-            // Se la diagnosi è autorizzata, aggiungi il tokenID alla lista
-            if (record.authorizedTreatment[hashedDiagnosis]) {
+            // Se la diagnosi è uguale, aggiungi il tokenID alla lista
+            if (keccak256(abi.encodePacked(record.diagnosis)) == keccak256(abi.encodePacked(hashedDiagnosis))) {
                 tokens[count] = tokenID;
                 count++;
             }
@@ -178,23 +170,24 @@ contract MedicalRecordSBT is ERC721 {
         return userTokens[user]; // Restituisce la lista di tokenIDs associati all'indirizzo
     }
 
-    function canUserReceiveTreatment(string memory did, string memory hashedDiagnosis) public view returns (bool) {
-        address userAddress = didToAddress[did];
-        require(userAddress != address(0), "Nessun utente associato a questo DID");
+   function canUserReceiveTreatment(address userAddress, string memory hashedDiagnosis) public view returns (bool) {
+        // Verifica che l'indirizzo non sia zero
+        require(userAddress != address(0), "Indirizzo non valido");
 
-        // Itera su tutti i token dell'utente e verifica se uno ha il permesso per la diagnosi
+        // Itera su tutti i token dell'utente e verifica se uno ha la diagnosi autorizzata
         uint256[] memory tokens = userTokens[userAddress];
         for (uint256 i = 0; i < tokens.length; i++) {
             uint256 tokenID = tokens[i];
             MedicalRecord storage record = tokenToRecord[tokenID];
 
-            // Se il trattamento per la diagnosi è autorizzato, restituisci true
-            if (record.authorizedTreatment[hashedDiagnosis]) {
+            // Se la diagnosi (hash) è autorizzata, restituisci true
+            if (keccak256(abi.encodePacked(record.diagnosis)) == keccak256(abi.encodePacked(hashedDiagnosis))) {
                 return true;
             }
         }
 
-        // Se nessun token ha il permesso per la diagnosi, restituisci false
+        // Se nessun token ha la diagnosi autorizzata, restituisci false
         return false;
     }
+
 }

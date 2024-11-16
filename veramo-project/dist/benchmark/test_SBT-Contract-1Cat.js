@@ -22,21 +22,13 @@ function getMalattieFromDB(filePath) {
 }
 // Funzione per verificare se un utente può ricevere un trattamento
 async function testCanUserReceiveTreatment(did, hashedDiagnosis) {
-    const startTime = performance.now(); // Inizio del tempo
     let canReceiveTreatment;
-    try {
-        // Chiamata alla funzione canUserReceiveTreatment
-        canReceiveTreatment = await sbtContract.canUserReceiveTreatment(did, hashedDiagnosis);
-    }
-    catch (error) {
-        console.error("Errore durante la verifica:", error);
-        return null; // Gestisci l'errore restituendo null
-    }
-    finally {
-        const endTime = performance.now(); // Fine del tempo
-        const elapsedTime = endTime - startTime; // Calcola il tempo impiegato
-        return { canReceiveTreatment, elapsedTime }; // Restituisci il risultato e il tempo
-    }
+    const startTime = performance.now(); // Inizio del tempo
+    // Chiamata alla funzione canUserReceiveTreatment
+    canReceiveTreatment = await sbtContract.canUserReceiveTreatment(did, hashedDiagnosis);
+    const endTime = performance.now(); // Fine del tempo
+    const elapsedTime = endTime - startTime; // Calcola il tempo impiegato
+    return { canReceiveTreatment, elapsedTime }; // Restituisci il risultato e il tempo
 }
 // Esempio di percorsi ai file
 const verifiableCredentialPath = path.join("./outputs", "credential.json");
@@ -72,6 +64,7 @@ for (const malattia of malattie) {
                 // Controlla se il risultato è null
                 if (result !== null) {
                     const { canReceiveTreatment, elapsedTime } = result; // Destruttura solo se il risultato non è null
+                    console.log(elapsedTime.toFixed(2));
                     totalElapsedTime += elapsedTime; // Accumula il tempo per ciascuna iterazione
                     // Aggiorna i contatori
                     if (canReceiveTreatment) {

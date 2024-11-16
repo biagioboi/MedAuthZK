@@ -4,14 +4,21 @@ import path from 'path';
 // Funzione per verificare la Verifiable Credential
 async function verifyCredential() {
     try {
+        const startTotalTime = performance.now(); // Inizio misurazione del tempo totale
         // Definisci il percorso del file credential.json nella cartella outputs
         const credentialFilePath = path.join('outputs', 'credential-subcategory.json');
+        const startFileReadTime = performance.now(); // Inizio misurazione del tempo di lettura del file
         // Leggi e stampa la Verifiable Credential dal file
         const vc = JSON.parse(fs.readFileSync(credentialFilePath, 'utf8'));
+        const endFileReadTime = performance.now(); // Fine misurazione del tempo di lettura del file
         console.log('Verifiable Credential:', vc);
+        console.log(`Tempo impiegato per leggere il file: ${(endFileReadTime - startFileReadTime).toFixed(2)} ms`);
         // Verifica la Verifiable Credential
+        const startVerificationTime = performance.now(); // Inizio misurazione del tempo di verifica
         const result = await agent.verifyCredential({ credential: vc });
-        console.log("Verificata? :" + result.verified);
+        const endVerificationTime = performance.now(); // Fine misurazione del tempo di verifica
+        console.log("Verificata? :", result.verified);
+        console.log(`Tempo impiegato: ${(endVerificationTime - startVerificationTime).toFixed(2)} ms`);
         // Controlla se la verifica è andata a buon fine
         if (result.verified) {
             // Salva il risultato solo se la verifica è andata a buon fine

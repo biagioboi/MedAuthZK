@@ -24,6 +24,8 @@ export const SBT_ADDRESS = process.env.SBT_ADDRESS || '';
 export const SBT_ADDRESS_CTG = process.env.SBT_ADDRESS_CTG || '';
 export const SBT_ADDRESS_MULTI = process.env.SBT_ADDRESS_MULTI || '';
 export const SBT_ADDRESS_MULTI_CTG = process.env.SBT_ADDRESS_MULTI_CTG || '';
+export const ADDRESS_ACCOUNT = process.env.ADDRESS_ACCOUNT || '';
+
 
 // Inizializza una connessione a un database SQLite per Veramo,
 // utilizzato per archiviare identità e credenziali. Gestisce
