@@ -15,12 +15,6 @@ const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 // Inizializza il contratto SBT con il wallet
 const sbtContract = new ethers.Contract(SBT_ADDRESS_MULTI_CTG, sbtAbi, wallet);
 
-// Funzione per leggere il DID dal file verifiableCredential.json
-function getDidFromCredential(filePath:string) {
-    const credential = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return credential.credentialSubject.id; // Presupponendo che il DID sia in id
-}
-
 // Funzione per leggere le malattie dal file malattieDB.json
 function getMalattieFromDB(filePath:string) {
     const malattieDB = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
