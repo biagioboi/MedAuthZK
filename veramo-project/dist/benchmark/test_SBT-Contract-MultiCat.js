@@ -1,30 +1,25 @@
 import fs from "fs";
 import { ethers, providers } from "ethers";
-import { PRIVATE_KEY, RPC_URL, SBT_ADDRESS_CTG } from "../veramo/setup.js";
+import { ADDRESS_ACCOUNT, PRIVATE_KEY, RPC_URL, SBT_ADDRESS_MULTI_CTG } from "../veramo/setup.js";
 import path from 'path';
 const provider = new providers.JsonRpcProvider(RPC_URL);
 // ABI del contratto SBT
-const artifactsPath = path.join('..', 'contracts', 'artifacts', `MedicalRecordSBT-category_metadata.json`);
+const artifactsPath = path.join('..', 'contracts', 'artifacts', `MedicalRecordSBT_MultiCTGmetadata.json`);
 const contractArtifact = JSON.parse(fs.readFileSync(artifactsPath, 'utf8'));
 const sbtAbi = contractArtifact.output.abi;
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 // Inizializza il contratto SBT con il wallet
-const sbtContract = new ethers.Contract(SBT_ADDRESS_CTG, sbtAbi, wallet);
-// Funzione per leggere il DID dal file verifiableCredential.json
-function getDidFromCredential(filePath) {
-    const credential = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return credential.credentialSubject.id; // Presupponendo che il DID sia in id
-}
+const sbtContract = new ethers.Contract(SBT_ADDRESS_MULTI_CTG, sbtAbi, wallet);
 // Funzione per leggere le malattie dal file malattieDB.json
 function getMalattieFromDB(filePath) {
     const malattieDB = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     return malattieDB; // Presupponendo che il file contenga un array di malattie
 }
 // Funzione per verificare se un utente può ricevere un trattamento per una categoria
-async function testCanUserReceiveTreatment(did, mainCategoryHash) {
+async function testCanUserReceiveTreatment(mainCategoryHash) {
     try {
         // Chiamata alla funzione canUserReceiveTreatment con l'hash principale della malattia
-        const canReceiveTreatment = await sbtContract.canUserReceiveTreatment(did, mainCategoryHash);
+        const canReceiveTreatment = await sbtContract.canUserReceiveTreatment(ADDRESS_ACCOUNT, mainCategoryHash);
         return canReceiveTreatment; // Restituisce il risultato
     }
     catch (error) {
@@ -33,10 +28,8 @@ async function testCanUserReceiveTreatment(did, mainCategoryHash) {
     }
 }
 // Esempio di percorsi ai file
-const verifiableCredentialPath = path.join("./outputs", "credential-subcategory.json");
 const malattieDBPath = path.join("./dist/utils", "categorieDB.json");
 // Estrazione del DID e delle malattie
-const didToTest = getDidFromCredential(verifiableCredentialPath);
 const malattie = getMalattieFromDB(malattieDBPath);
 // Imposta il numero di iterazioni variabili
 const iterationsArray = Array.from({ length: 5 }, (_, i) => (i + 1) * 20); // [5, 10, 15, ..., 100]
@@ -62,7 +55,7 @@ for (const malattia of malattie) {
             // Esegui le iterazioni
             for (let i = 0; i < iterations; i++) {
                 const startTime = performance.now(); // Inizio del tempo
-                const canReceiveTreatment = await testCanUserReceiveTreatment(didToTest, mainCategoryHash);
+                const canReceiveTreatment = await testCanUserReceiveTreatment(mainCategoryHash);
                 const endTime = performance.now(); // Fine del tempo
                 const elapsedTime = endTime - startTime; // Calcola il tempo impiegato
                 totalElapsedTime += elapsedTime; // Accumula il tempo per ciascuna iterazione

@@ -1,8 +1,8 @@
 Comando,Tempo di Esecuzione (ms),Gas usato,Costo in €
 node ./dist/veramo/setup.js,0.00 ms,0,0.00 EUR
 node ./dist/create-issuer-did.js,0.00 ms,0,0.00 EUR
-node ./dist/register-issuer-did.js,8382.03 ms,211365,8.68 EUR
+node ./dist/register-issuer-did.js,4203.92 ms,35136,1.44 EUR
 node ./dist/create-client-did.js,0.00 ms,0,0.00 EUR
-node ./dist/register-client-did.js,4295.25 ms,595826,24.47 EUR
-node ./dist/multi-sbt-ctg/create-credential-sottocategoria.js,127.41 ms,0,0.00 EUR
-node ./dist/multi-sbt/create-credential.js,111.14 ms,0,0.00 EUR
+node ./dist/register-client-did.js,4229.10 ms,44960,1.85 EUR
+node ./dist/multi-sbt-ctg/create-credential-sottocategoria.js,71.61 ms,0,0.00 EUR
+node ./dist/multi-sbt/create-credential.js,61.61 ms,0,0.00 EUR

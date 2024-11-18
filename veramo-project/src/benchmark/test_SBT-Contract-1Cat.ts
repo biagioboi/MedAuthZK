@@ -6,7 +6,7 @@ import path from 'path';
 const provider = new providers.JsonRpcProvider(RPC_URL);
 
 // ABI del contratto SBT
-const artifactsPath = path.join('..', 'contracts', 'artifacts', `MedicalRecordSBT_metadata.json`);
+const artifactsPath = path.join('..', 'contracts', 'artifacts', `MedicalRecordMultiSBT_metadata.json`);
 const contractArtifact = JSON.parse(fs.readFileSync(artifactsPath, 'utf8'));
 const sbtAbi = contractArtifact.output.abi;
 
