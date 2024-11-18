@@ -3,7 +3,7 @@ const detailsDiv = document.getElementById("details");
 const treatmentsDiv = document.getElementById("treatments"); // Sezione per i trattamenti
 
 // Inizializza l'indirizzo del contratto e l'ABI
-const contractAddress = "0xfb27c25ae9541289cb088647748f2d8cb6318094"; // Sostituisci con l'indirizzo del contratto SBT
+const contractAddress = "0x345ca3e014aaf5dca488057592ee47305d9b3e10"; // Sostituisci con l'indirizzo del contratto SBT
 const sbtAbi = [
     "function getAllSBTsForAddress(address user) view returns (uint256[] memory)",
     "function getMedicalRecord(uint256 tokenID) view returns (\

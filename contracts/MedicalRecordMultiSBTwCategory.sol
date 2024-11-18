@@ -50,17 +50,18 @@ contract MedicalRecordSBT is ERC721 {
         Verifier.Proof memory zkpProof, // Prova ZKP in formato struct
         uint256[1] memory inputs // Input per la verifica
     ) public {
-        // Verifica della prova ZKP
-        require(isProofEmpty(userProofs[msg.sender]), "Prova gia' utilizzata per questo utente");
-        bool proofValid = verifier.verifyTx(zkpProof, inputs);
-        require(proofValid, "Prova ZKP non valida");
 
-         // Controlla se l'utente ha già un SBT per questa diagnosi e categoria
+        // Controlla se l'utente ha già un SBT per questa diagnosi e categoria
         require(
             !hasSBTForCategory(msg.sender, category),
             "SBT gia emesso per questa diagnosi e categoria"
         );
 
+        // Verifica della prova ZKP
+        bool proofValid = verifier.verifyTx(zkpProof, inputs);
+        require(proofValid, "Prova ZKP non valida");
+
+      
         // Crea un nuovo SBT
         _tokenCounter++;
         _safeMint(msg.sender, _tokenCounter);
@@ -91,22 +92,29 @@ contract MedicalRecordSBT is ERC721 {
     }
 
     function revokeSBT(uint256 tokenID) public {
-        require(ownerOf(tokenID) == msg.sender, "Non autorizzato a revocare questo SBT");
-
-        // Cancella i dati associati al token
         MedicalRecord storage record = tokenToRecord[tokenID];
+        address owner = ownerOf(tokenID);
 
-        // Rimuove l'associazione DID, se necessario
-        if (keccak256(abi.encodePacked(didToAddress[record.id])) == keccak256(abi.encodePacked(msg.sender))) {
-            delete didToAddress[record.id];
-        }
+        // Brucia il token
+        _burn(tokenID);
 
-        delete tokenToRecord[tokenID]; // Rimuovi la mappatura del token
-        removeTokenFromUser(msg.sender, tokenID); // Rimuovi il token dall'utente
-        _burn(tokenID); // Brucia il token
+        // Rimuove l'associazione DID
+        string memory userDID = record.id;
+        delete didToAddress[userDID];
 
-        emit SBTRevoked(msg.sender, tokenID);
+        // Rimuovi la diagnosi dal record medico
+        delete record.diagnosisHash; 
+        delete record.categoryHash; 
+
+        // Cancella il record medico completo
+        delete tokenToRecord[tokenID];
+
+        // Rimuovi il token dalla lista di tokens dell'utente
+        _removeTokenFromList(owner, tokenID);
+
+        emit SBTRevoked(owner, tokenID);
     }
+
 
     function canUserReceiveTreatment(address userAddress, string memory category) public view returns (bool) {
         // Verifica che l'indirizzo non sia zero
@@ -128,7 +136,7 @@ contract MedicalRecordSBT is ERC721 {
 
 
 
-    function removeTokenFromUser(address user, uint256 tokenID) internal {
+    function _removeTokenFromList(address user, uint256 tokenID) internal {
         uint256[] storage tokens = userTokens[user];
         for (uint256 i = 0; i < tokens.length; i++) {
             if (tokens[i] == tokenID) {
@@ -164,16 +172,6 @@ contract MedicalRecordSBT is ERC721 {
             record.authenticated,
             record.diagnosisHash,
             record.categoryHash
-        );
-    }
-
-    // Funzione per verificare se una prova è vuota
-    function isProofEmpty(Verifier.Proof memory proof) internal pure returns (bool) {
-        return (
-            proof.a.X == 0 && proof.a.Y == 0 && 
-            proof.b.X[0] == 0 && proof.b.X[1] == 0 && 
-            proof.b.Y[0] == 0 && proof.b.Y[1] == 0 && 
-            proof.c.X == 0 && proof.c.Y == 0
         );
     }
 
