@@ -39,13 +39,13 @@ Diabete,Diabete di tipo 2,40,14.60,0,40
 Diabete,Diabete di tipo 2,60,15.34,0,60
 Diabete,Diabete di tipo 2,80,14.89,0,80
 Diabete,Diabete di tipo 2,100,15.30,0,100
-Malattia renale,Insufficienza renale,20,15.40,0,20
-Malattia renale,Insufficienza renale,40,15.12,0,40
-Malattia renale,Insufficienza renale,60,15.47,0,60
-Malattia renale,Insufficienza renale,80,14.10,0,80
-Malattia renale,Insufficienza renale,100,14.99,0,100
-Malattia renale,Malattia renale policistica,20,14.63,0,20
-Malattia renale,Malattia renale policistica,40,15.35,0,40
-Malattia renale,Malattia renale policistica,60,14.85,0,60
-Malattia renale,Malattia renale policistica,80,14.82,0,80
-Malattia renale,Malattia renale policistica,100,15.18,0,100
+Malattia renale,Insufficienza renale,20,15.40,20,20
+Malattia renale,Insufficienza renale,40,15.12,40,40
+Malattia renale,Insufficienza renale,60,15.47,60,60
+Malattia renale,Insufficienza renale,80,14.10,80,80
+Malattia renale,Insufficienza renale,100,14.99,100,100
+Malattia renale,Malattia renale policistica,20,14.63,20,20
+Malattia renale,Malattia renale policistica,40,15.35,40,40
+Malattia renale,Malattia renale policistica,60,14.85,60,60
+Malattia renale,Malattia renale policistica,80,14.82,80,80
+Malattia renale,Malattia renale policistica,100,15.18,100,100
