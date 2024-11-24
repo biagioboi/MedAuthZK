@@ -62,7 +62,10 @@ def plot_benchmark_from_csv(file_path):
     print(f'Il grafico complessivo è stato salvato nella cartella: {output_dir}')
 
 # Esempio di utilizzo per un file
+csv_file_path = './veramo-project/outputs/benchmark_results.csv'  # Sostituire con il nome del file CSV
+plot_benchmark_from_csv(csv_file_path)
+
 
 # Esempio di utilizzo per un altro file
-csv_file_path = 'benchmark_results_multiple_categories.csv'  # Sostituire con il nome del file CSV
+csv_file_path = './veramo-project/outputs/benchmark_results_multiple_categories.csv'  # Sostituire con il nome del file CSV
 plot_benchmark_from_csv(csv_file_path)

@@ -1,5 +1,5 @@
 Categoria Principale,Sottocategoria,Iterazioni,Tempo Medio (ms),Conteggio Idonei,Conteggio Non Idonei
-Cancro,Cancro al seno,20,16.68,0,20
+Cancro,Cancro al seno,20,14.68,0,20
 Cancro,Cancro al seno,40,13.53,0,40
 Cancro,Cancro al seno,60,14.69,0,60
 Cancro,Cancro al seno,80,14.55,0,80
@@ -39,7 +39,7 @@ Diabete,Diabete di tipo 2,40,14.77,0,40
 Diabete,Diabete di tipo 2,60,15.24,0,60
 Diabete,Diabete di tipo 2,80,15.19,0,80
 Diabete,Diabete di tipo 2,100,14.66,0,100
-Malattia renale,Insufficienza renale,20,13.66,0,20
+Malattia renale,Insufficienza renale,20,14.66,0,20
 Malattia renale,Insufficienza renale,40,14.14,0,40
 Malattia renale,Insufficienza renale,60,14.55,0,60
 Malattia renale,Insufficienza renale,80,15.27,0,80
