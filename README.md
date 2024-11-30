@@ -76,7 +76,7 @@ npm install -g tsc
 npm run build
 
 # I file compilati saranno salvati nella cartella dist come file .js
-
+```
 ---
 
 ## 2. Configurazione della Rete Blockchain e Deploy dei Contratti
@@ -91,6 +91,7 @@ cd quorum-test-network
 ./start.sh
 
 # Assicurarsi che Docker sia in esecuzione e che le risorse siano adeguatamente allocate (CPU e RAM)
+```
 
 ### 2.2 Deploy dei Contratti
 
@@ -108,7 +109,7 @@ cd quorum-test-network
 # - Parametri specifici della rete blockchain locale
 
 # Nota: Il file .env non dovrebbe mai essere pubblicato in ambienti di produzione per motivi di sicurezza.
-
+```
 ---
 
 ## 3. Configurazione dell'Interfaccia Web
@@ -129,3 +130,4 @@ npm install -g live-server
 # Configurare l'interazione con il contratto SBT
 # Modificare i file JavaScript responsabili dell'interazione con il contratto
 # Inserire l'indirizzo corretto del contratto SBT nei file di configurazione
+```
