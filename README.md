@@ -54,3 +54,78 @@ Il protocollo è progettato per garantire la privacy dei pazienti in contesti sa
 
 
 Questo protocollo innovativo promuove un sistema di autenticazione e autorizzazione sicuro e rispettoso della privacy del paziente, offrendo alle strutture sanitarie uno strumento efficiente per gestire i trattamenti autorizzati e riducendo l'esposizione dei dati sensibili. 
+
+
+# MedAuthZKP - Installazione 
+
+---
+
+## 1. Installazione delle Dipendenze
+
+```bash
+# Entrare nella directory del progetto Veramo
+cd veramo-project
+
+# Installare le dipendenze richieste
+npm install
+
+# Installare TypeScript (se non già installato)
+npm install -g tsc
+
+# Compilare i file TypeScript dopo eventuali modifiche
+npm run build
+
+# I file compilati saranno salvati nella cartella dist come file .js
+
+---
+
+## 2. Configurazione della Rete Blockchain e Deploy dei Contratti
+
+### 2.1 Avvio della rete locale con Docker
+
+```bash
+# Nella directory principale del progetto, individuare il file quorum-test-network.zip ed estrarlo
+
+# Accedere alla directory estratta e avviare lo script
+cd quorum-test-network
+./start.sh
+
+# Assicurarsi che Docker sia in esecuzione e che le risorse siano adeguatamente allocate (CPU e RAM)
+
+### 2.2 Deploy dei Contratti
+
+```bash
+# Aprire Remix IDE e configurare la compilazione con i seguenti parametri:
+# - EVM Version: Istanbul
+# - Environment: Rete locale configurata tramite Besu
+
+# Effettuare il deploy dei contratti nell'ordine seguente:
+# 1. Deploy dei Verifier Contracts generati con ZoKrates
+# 2. Deploy dei SBT Contracts, configurando il costruttore con l'indirizzo dei contratti Verifier precedentemente deployati
+
+# Modificare il file .env per configurare l'ambiente, includendo:
+# - Indirizzi dei contratti deployati
+# - Parametri specifici della rete blockchain locale
+
+# Nota: Il file .env non dovrebbe mai essere pubblicato in ambienti di produzione per motivi di sicurezza.
+
+---
+
+## 3. Configurazione dell'Interfaccia Web
+
+```bash
+# Accedere alla directory dedicata all'interfaccia web
+cd medical-record-sbt
+
+# Installare e avviare un server web locale
+npx live-server
+
+# Se live-server non è installato, eseguire il comando:
+npm install -g live-server
+
+# Il server avvierà automaticamente il browser
+# Navigare verso la cartella src, che contiene il file index.html
+
+# Configurare l'interazione con il contratto SBT
+# Modificare i file JavaScript responsabili dell'interazione con il contratto
+# Inserire l'indirizzo corretto del contratto SBT nei file di configurazione
