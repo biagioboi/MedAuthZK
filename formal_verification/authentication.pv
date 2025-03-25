@@ -1,0 +1,191 @@
+(* --------------------------------------------------------------------------------------------------------- *)
+(* HTTPS Connect *)
+(* --------------------------------------------------------------------------------------------------------- *)
+
+(* --------------------------------------------------------------------------------------------------------- *)
+(* Start Definitions *)
+(* --------------------------------------------------------------------------------------------------------- *)
+
+(* START keys *)
+type SymmetricKey.
+type SecretKey.
+type PublicKey.
+fun pk(SecretKey):PublicKey.
+(* END keys *)
+type G.
+type exponent.
+
+const uri_req:bitstring.
+const usr:bitstring.
+
+type tag.
+type ktag.
+
+const tag1:bitstring.
+const tag2:bitstring.
+const tag2_bis:bitstring.
+const tag3:bitstring.
+const tag4:bitstring.
+const tag5:bitstring.
+const tag6:bitstring.
+const tag7:bitstring.
+const tag8:bitstring.
+const tag9:bitstring.
+const tag10:bitstring.
+const tag11:bitstring.
+const tag12:bitstring.
+
+
+const KEXDHINIT, KEXDHREPLY, KEXDHINITSERVER, KEXDHREPLYSERVER: tag [data].
+const keyEncStoC, keyEncCtoS, keyEncAtoC, keyEncCtoA: ktag [data].
+
+(* START hash *)
+fun hash(bitstring): bitstring.
+fun hash_pk(PublicKey): bitstring.
+fun hash_fork(bitstring): SymmetricKey.
+(* End hash *)
+
+(* START symmetric encryption *)
+fun enc(bitstring(*the message*), SymmetricKey):bitstring (*symmetric encrypt input msg*).
+reduc forall msg:bitstring,symk:SymmetricKey; dec(enc(msg,symk),symk)=msg (*symmetric decrypt*).
+
+fun symk_to_bit(SymmetricKey): bitstring.
+reduc forall symk:SymmetricKey; bit_to_symk(symk_to_bit(symk)) = symk.
+(* END symmetric encryption *)
+
+(* START asymmetric encryption *)
+fun aenc(bitstring(*the message*), PublicKey):bitstring (*asymmetric encrypt input msg*).
+reduc forall msg:bitstring,sk:SecretKey; adec(aenc(msg,pk(sk)),sk)=msg (*asymmetric decrypt*).
+(* END Asymmetric encryption *)
+
+(* START digital signature *)
+fun sig(bitstring(*the message*), SecretKey):bitstring(*the signature value*).
+reduc forall msg:bitstring,sk:SecretKey; check(msg,sig(msg,sk),pk(sk))=true (*check(msg,sigVal,pk)*).
+(* END digital signature *)
+
+(* START digital signature *)
+fun sig_hash_k(SymmetricKey(*the message*), SecretKey):bitstring(*the signature value*).
+reduc forall msg:SymmetricKey,sk:SecretKey; check_hash_k(msg,sig_hash_k(msg,sk),pk(sk))=true (*check(msg,sigVal,pk)*).
+(* END digital signature *)
+
+(*DEFS*)
+fun ch(bitstring): channel.
+fun chSymK(SymmetricKey): channel.
+
+
+free c1:channel[private].
+
+const g: G.
+fun exp(G, exponent): G.
+equation forall x: exponent, y: exponent; exp(exp(g, x), y) = exp(exp(g, y), x).
+
+
+event HolderAuthenticatedByNHS(bitstring, bitstring).
+event HolderAuthorizedByMRecord(bitstring, bitstring).
+event HolderAuthorizedByNHS(bitstring, bitstring, bitstring, bitstring).
+event HolderSentLastMessageToNHS(bitstring, bitstring).
+
+event reach.
+
+(* SECRECY *)
+
+let holder(talksOnlyToHonest:bool, c:channel, h:bitstring, skh:SecretKey, nhs:bitstring, pknhs:PublicKey, disease:bitstring)=
+    let m1_auth = (pk(skh), disease) in
+    out(c1, m1_auth);
+
+    in(c1, m2':bitstring);
+    let (n2':bitstring) = adec(m2', skh) in
+    event HolderSentLastMessageToNHS(m2', n2');
+    out(c1, n2');
+
+0.
+
+let nhs(talksOnlyToHonest:bool, c:channel, nhs:bitstring, sknhs:SecretKey, h:bitstring, pkh:PublicKey, mrecord:bitstring, pkmrecord:PublicKey, diease:bitstring)=
+    in(c1, m1_auth':bitstring);
+    let (pkh':PublicKey, disease':bitstring) = m1_auth' in
+    new n2:bitstring;
+    let m2 = (aenc(n2, pkh')) in
+    out(c1, m2);
+
+    in(c1, n2':bitstring);
+    if(n2'=n2) then
+    let m3 = (pkh', disease') in
+    
+    out(c, m3);
+
+    in(c, m4':bitstring);
+    let (authorized:bitstring, sig_auth:bitstring) = m4' in
+    if(check(authorized, sig_auth, pkmrecord)) then
+
+    if(talksOnlyToHonest) then
+        event HolderAuthenticatedByNHS(m2, n2');
+        event HolderAuthorizedByNHS(m2, n2', m3, m4');
+
+
+
+0.
+
+let mrecord(talksOnlyToHonest:bool, c:channel, mrecord:bitstring, skmrecord:SecretKey, nhs:bitstring, pknhs:PublicKey,  h:bitstring, pkh:PublicKey, sbt:bitstring)=
+
+    in(c, m3':bitstring);
+    let(pkh':PublicKey, disease':bitstring) = m3' in
+    if(pkh'=pkh) then
+    if(hash(disease')=sbt) then
+    
+    new authenticated:bitstring;
+    let m4 = (authenticated, sig(authenticated, skmrecord)) in
+    event HolderAuthorizedByMRecord(m3', m4);
+    out(c, m4);
+
+
+
+0.
+
+query event(reach).
+
+query m2:bitstring, n2:bitstring;
+    event(HolderAuthenticatedByNHS(m2, n2)) ==> event(HolderSentLastMessageToNHS(m2, n2)).
+query m1:bitstring, m2:bitstring, n2:bitstring, m3:bitstring, m4:bitstring;
+    event (HolderAuthorizedByNHS(m2, n2, m3, m4)) ==> event(HolderSentLastMessageToNHS(m2, n2)) && event(HolderAuthorizedByMRecord(m3, m4)).
+
+(* --------------------------------------------------------------------------------------------------------- *)
+(* End Assumptions *)
+(* Start Main *)
+(* --------------------------------------------------------------------------------------------------------- *)
+
+free c:channel.
+process (*use root process for setup *)
+
+    (* create identities *)
+    new u:bitstring;
+    new a:bitstring;
+    new v:bitstring;
+
+    (*advertise identities*)
+    out(c,u);
+    out(c,a);
+    out(c,v);
+
+    (*declare secret keys*)
+    new sku:SecretKey;
+    new ska:SecretKey;
+    new skv:SecretKey;
+
+    (*advertise public keys*)
+    out(c,pk(sku));
+    out(c,pk(ska));
+    out(c,pk(skv));
+
+    new disease:bitstring;
+    let sbt = hash(disease) in
+
+    (*let agents dance*)
+    (
+        ! holder(true, c, u, sku, a, pk(ska), disease)
+      | ! nhs(true, c, a, ska, u, pk(sku), v, pk(skv), disease)
+      | ! mrecord(true, c, v, skv, a, pk(ska), u, pk(sku), sbt)
+    )
+
+(* --------------------------------------------------------------------------------------------------------- *)
+(* End Main *)
+(* --------------------------------------------------------------------------------------------------------- *)
